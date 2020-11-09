@@ -3,18 +3,16 @@ package de.oth.regensburg.projektstudium.backend.entity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 public class Package {
     private @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id; // ID used for internal tracking which is also printed as a QR code on the package
+    @Enumerated(EnumType.STRING)
     private PackageType type;
     private String barcode; // Barcode from external providers (e.g. DHL, DPD, etc.)
     private String orderNumber; // Order number in SAP
@@ -26,18 +24,18 @@ public class Package {
     private LocalDateTime createdTimestamp;
     @UpdateTimestamp
     private LocalDateTime lastUpdatedTimestamp;
+    @Enumerated(EnumType.STRING)
     private PackageStatus status = PackageStatus.CREATED;
 
     public Package() {
     }
 
-    public Package(PackageType type, String barcode, String orderNumber, Person recipient, Person sender, PackageStatus status) {
+    public Package(PackageType type, String barcode, String orderNumber, Person recipient, Person sender) {
         this.type = type;
         this.barcode = barcode;
         this.orderNumber = orderNumber;
-        this.recipient = recipient;
-        this.sender = sender;
-        this.status = status;
+        setRecipient(recipient);
+        setSender(sender);
     }
 
     public Long getId() {
@@ -77,7 +75,11 @@ public class Package {
     }
 
     public void setRecipient(Person recipient) {
+        if (this.recipient != null) {
+            this.recipient.getInboundPackages().remove(this);
+        }
         this.recipient = recipient;
+        recipient.getInboundPackages().add(this);
     }
 
     public Person getSender() {
@@ -85,7 +87,11 @@ public class Package {
     }
 
     public void setSender(Person sender) {
+        if (this.sender != null) {
+            this.sender.getOutboundPackages().remove(this);
+        }
         this.sender = sender;
+        sender.getOutboundPackages().add(this);
     }
 
     public LocalDateTime getCreatedTimestamp() {

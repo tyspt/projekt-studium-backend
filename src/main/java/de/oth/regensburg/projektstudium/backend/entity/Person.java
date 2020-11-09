@@ -1,5 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,7 +10,7 @@ import java.util.Objects;
 @Entity
 public class Person {
     private @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     private String name;
     private String email;
@@ -17,14 +19,17 @@ public class Person {
     private Building building;
     private String fullAddress;
 
-    @OneToMany
-    private Collection<Package> outboundPackages = new HashSet<>();
-    @OneToMany
+    @OneToMany(mappedBy = "recipient")
+    @JsonIgnore
     private Collection<Package> inboundPackages = new HashSet<>();
+    @OneToMany(mappedBy = "sender")
+    @JsonIgnore
+    private Collection<Package> outboundPackages = new HashSet<>();
 
     @ManyToOne
     private Person representative;
     @OneToMany
+    @JsonIgnore
     private Collection<Person> representativeOf = new HashSet<>();
 
     public Person() {
@@ -34,7 +39,7 @@ public class Person {
         this.name = name;
         this.email = email;
         this.telephone = telephone;
-        this.building = building;
+        setBuilding(building);
         this.fullAddress = fullAddress;
     }
 
@@ -75,7 +80,11 @@ public class Person {
     }
 
     public void setBuilding(Building building) {
+        if (this.building != null) {
+            this.building.getPeople().remove(this);
+        }
         this.building = building;
+        building.getPeople().add(this);
     }
 
     public String getFullAddress() {
@@ -90,16 +99,8 @@ public class Person {
         return outboundPackages;
     }
 
-    public void setOutboundPackages(Collection<Package> outboundPackages) {
-        this.outboundPackages = outboundPackages;
-    }
-
     public Collection<Package> getInboundPackages() {
         return inboundPackages;
-    }
-
-    public void setInboundPackages(Collection<Package> inboundPackages) {
-        this.inboundPackages = inboundPackages;
     }
 
     public Person getRepresentative() {
@@ -107,15 +108,16 @@ public class Person {
     }
 
     public void setRepresentative(Person representative) {
+        if (representative == null) {
+            this.representative.getRepresentativeOf().remove(this);
+            this.representative = null;
+        }
         this.representative = representative;
+        this.representative.getRepresentativeOf().add(this);
     }
 
     public Collection<Person> getRepresentativeOf() {
         return representativeOf;
-    }
-
-    public void setRepresentativeOf(Collection<Person> representativeOf) {
-        this.representativeOf = representativeOf;
     }
 
     @Override
@@ -143,7 +145,7 @@ public class Person {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", telephone='" + telephone + '\'' +
-                ", building=" + building +
+                ", building=" + building.getShortName() +
                 ", fullAddress='" + fullAddress + '\'' +
                 '}';
     }

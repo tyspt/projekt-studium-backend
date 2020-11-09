@@ -1,9 +1,8 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,24 +10,24 @@ import java.util.Objects;
 @Entity
 public class Building {
     private @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     private String shortName;
     private String fullName;
     private String description;
     private String address;
-    @OneToMany
+    @OneToMany(mappedBy = "building")
+    @JsonIgnore
     private Collection<Person> people = new HashSet<>();
 
     public Building() {
     }
 
-    public Building(String shortName, String fullName, String description, String address, Collection<Person> people) {
+    public Building(String shortName, String fullName, String description, String address) {
         this.shortName = shortName;
         this.fullName = fullName;
         this.description = description;
         this.address = address;
-        this.people = people;
     }
 
     public Long getId() {
@@ -71,12 +70,8 @@ public class Building {
         this.address = address;
     }
 
-    public Collection<Person> getEmployees() {
+    public Collection<Person> getPeople() {
         return people;
-    }
-
-    public void setEmployees(Collection<Person> people) {
-        this.people = people;
     }
 
     @Override
