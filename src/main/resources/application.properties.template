@@ -1,0 +1,11 @@
+# Remove the *.template (filename should be application.properties) of this file 
+# and add your database connection username & password before running the project locally
+spring.datasource.url=jdbc:mysql://localhost:3306/projekt_studium_db
+spring.datasource.username={{ database username }}
+spring.datasource.password={{ database password }}
+spring.jpa.database-platform = org.hibernate.dialect.MySQL5Dialect
+spring.jpa.generate-ddl=true
+spring.jpa.hibernate.ddl-auto = create
+
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
