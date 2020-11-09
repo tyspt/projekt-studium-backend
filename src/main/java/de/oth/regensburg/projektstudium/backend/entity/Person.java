@@ -9,6 +9,15 @@ import java.util.Objects;
 
 @Entity
 public class Person {
+    @OneToMany(mappedBy = "recipient")
+    @JsonIgnore
+    private final Collection<Package> inboundPackages = new HashSet<>();
+    @OneToMany(mappedBy = "sender")
+    @JsonIgnore
+    private final Collection<Package> outboundPackages = new HashSet<>();
+    @OneToMany
+    @JsonIgnore
+    private final Collection<Person> representativeOf = new HashSet<>();
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -18,19 +27,8 @@ public class Person {
     @ManyToOne
     private Building building;
     private String fullAddress;
-
-    @OneToMany(mappedBy = "recipient")
-    @JsonIgnore
-    private Collection<Package> inboundPackages = new HashSet<>();
-    @OneToMany(mappedBy = "sender")
-    @JsonIgnore
-    private Collection<Package> outboundPackages = new HashSet<>();
-
     @ManyToOne
     private Person representative;
-    @OneToMany
-    @JsonIgnore
-    private Collection<Person> representativeOf = new HashSet<>();
 
     public Person() {
     }

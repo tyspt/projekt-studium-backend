@@ -12,8 +12,8 @@ import java.util.List;
 @RestController
 public class PersonController {
 
-    private final PersonRepository repository;
     private static final Logger log = LoggerFactory.getLogger(PersonController.class);
+    private final PersonRepository repository;
 
     public PersonController(PersonRepository repository) {
         this.repository = repository;

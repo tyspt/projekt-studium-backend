@@ -9,6 +9,9 @@ import java.util.Objects;
 
 @Entity
 public class Building {
+    @OneToMany(mappedBy = "building")
+    @JsonIgnore
+    private final Collection<Person> people = new HashSet<>();
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -16,9 +19,6 @@ public class Building {
     private String fullName;
     private String description;
     private String address;
-    @OneToMany(mappedBy = "building")
-    @JsonIgnore
-    private Collection<Person> people = new HashSet<>();
 
     public Building() {
     }

@@ -12,8 +12,8 @@ import java.util.List;
 @RestController
 public class BuildingController {
 
-    private final BuildingRepository repository;
     private static final Logger log = LoggerFactory.getLogger(BuildingController.class);
+    private final BuildingRepository repository;
 
     public BuildingController(BuildingRepository repository) {
         this.repository = repository;
