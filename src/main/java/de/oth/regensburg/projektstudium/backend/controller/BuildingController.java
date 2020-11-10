@@ -1,7 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.controller;
 
 import de.oth.regensburg.projektstudium.backend.entity.Building;
-import de.oth.regensburg.projektstudium.backend.repository.BuildingRepository;
+import de.oth.regensburg.projektstudium.backend.service.BuildingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +13,14 @@ import java.util.List;
 public class BuildingController {
 
     private static final Logger log = LoggerFactory.getLogger(BuildingController.class);
-    private final BuildingRepository repository;
+    private final BuildingService buildingService;
 
-    public BuildingController(BuildingRepository repository) {
-        this.repository = repository;
+    public BuildingController(BuildingService buildingService) {
+        this.buildingService = buildingService;
     }
 
     @GetMapping("/buildings")
-    List<Building> all() {
-        return repository.findAll();
+    List<Building> findAll() {
+        return buildingService.findAll();
     }
 }

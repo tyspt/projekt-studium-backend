@@ -1,5 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.oth.regensburg.projektstudium.backend.utils.PackageDeserializer;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@JsonDeserialize(using = PackageDeserializer.class)
 public class Package {
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -136,7 +139,7 @@ public class Package {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, barcode, orderNumber, recipient, sender, createdTimestamp, lastUpdatedTimestamp, status);
+        return Objects.hash(id);
     }
 
     @Override

@@ -133,17 +133,17 @@ public class Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, telephone, building, fullAddress);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Person{" +
-                "employeeId=" + id +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", telephone='" + telephone + '\'' +
-                ", building=" + building.getShortName() +
+                ", building=" + building +
                 ", fullAddress='" + fullAddress + '\'' +
                 '}';
     }

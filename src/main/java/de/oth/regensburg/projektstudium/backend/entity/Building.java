@@ -89,7 +89,7 @@ public class Building {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, shortName, fullName, description, address, people);
+        return Objects.hash(id);
     }
 
     @Override
