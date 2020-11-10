@@ -1,6 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Building;
+import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;
 import de.oth.regensburg.projektstudium.backend.repository.BuildingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,5 +22,11 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public List<Building> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Building findOneById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Building.class));
     }
 }

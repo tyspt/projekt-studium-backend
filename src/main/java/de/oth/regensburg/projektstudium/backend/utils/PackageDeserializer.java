@@ -30,6 +30,7 @@ public class PackageDeserializer extends StdDeserializer<Package> {
         pkg.setStatus(pNode.get("status") != null ? PackageStatus.valueOf(pNode.get("status").asText()) : null);
 
         pkg.setRecipient(this.deserializePerson(pNode.get("recipient")));
+        pkg.setSender(this.deserializePerson(pNode.get("sender")));
         return pkg;
     }
 
@@ -42,12 +43,12 @@ public class PackageDeserializer extends StdDeserializer<Package> {
         person.setFullAddress(pNode.get("fullAddress") != null ? pNode.get("fullAddress").asText() : null);
 
         JsonNode bNode = pNode.get("building");
-        Building building = new Building();
-        building.setId(bNode.get("id") != null ? bNode.get("id").asLong() : null);
-
+        if (bNode != null) {
+            Building building = new Building();
+            building.setId(bNode.get("id") != null ? bNode.get("id").asLong() : null);
+            person.setBuilding(building);
+        }
 //        person.setRepresentative(pNode.get("representative") != null ? pNode.get("representative").textValue(): null);
-
-        person.setBuilding(building);
         return person;
     }
 }

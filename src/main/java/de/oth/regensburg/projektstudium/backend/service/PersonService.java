@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface PersonService {
     List<Person> findAll();
+
+    Person findById(Long id);
+
+    Person addPerson(Person newPerson);
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BuildingService {
     List<Building> findAll();
+
+    Building findOneById(Long id);
 }
