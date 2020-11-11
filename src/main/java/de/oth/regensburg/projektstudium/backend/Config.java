@@ -13,13 +13,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class Config {
+public class Config extends WebMvcConfigurerAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(Config.class);
+    LoggerInterceptor logInterceptor;
+
+    public Config(LoggerInterceptor logInterceptor) {
+        this.logInterceptor = logInterceptor;
+    }
 
     @Bean
     CommandLineRunner initDatabase(BuildingRepository buildingRepository, PersonRepository personRepository, PackageRepository packageRepository) {
@@ -54,5 +60,10 @@ public class Config {
                 registry.addMapping("/**");
             }
         };
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(logInterceptor);
     }
 }
