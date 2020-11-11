@@ -36,19 +36,21 @@ public class PackageDeserializer extends StdDeserializer<Package> {
 
     private Person deserializePerson(JsonNode pNode) {
         Person person = new Person();
-        person.setId(pNode.get("id") != null ? pNode.get("id").asLong() : null);
-        person.setName(pNode.get("name") != null ? pNode.get("name").textValue() : null);
-        person.setEmail(pNode.get("email") != null ? pNode.get("email").asText() : null);
-        person.setTelephone(pNode.get("telephone") != null ? pNode.get("telephone").asText() : null);
-        person.setFullAddress(pNode.get("fullAddress") != null ? pNode.get("fullAddress").asText() : null);
+        if (pNode != null) {
+            person.setId(pNode.get("id") != null ? pNode.get("id").asLong() : null);
+            person.setName(pNode.get("name") != null ? pNode.get("name").textValue() : null);
+            person.setEmail(pNode.get("email") != null ? pNode.get("email").asText() : null);
+            person.setTelephone(pNode.get("telephone") != null ? pNode.get("telephone").asText() : null);
+            person.setFullAddress(pNode.get("fullAddress") != null ? pNode.get("fullAddress").asText() : null);
 
-        JsonNode bNode = pNode.get("building");
-        if (bNode != null) {
-            Building building = new Building();
-            building.setId(bNode.get("id") != null ? bNode.get("id").asLong() : null);
-            person.setBuilding(building);
-        }
+            JsonNode bNode = pNode.get("building");
+            if (bNode != null) {
+                Building building = new Building();
+                building.setId(bNode.get("id") != null ? bNode.get("id").asLong() : null);
+                person.setBuilding(building);
+            }
 //        person.setRepresentative(pNode.get("representative") != null ? pNode.get("representative").textValue(): null);
+        }
         return person;
     }
 }

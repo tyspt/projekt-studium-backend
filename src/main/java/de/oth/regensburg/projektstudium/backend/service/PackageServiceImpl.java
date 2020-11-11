@@ -41,7 +41,7 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public Package addPackage(Package newPackage) {
+    public Package addOrUpdatePackage(Package newPackage) {
         return repository.save(newPackage);
     }
 }

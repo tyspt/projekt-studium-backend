@@ -10,5 +10,5 @@ public interface PackageService {
 
     Package findOneByIdOrBarcode(String idOrBarcode);
 
-    Package addPackage(Package newPackage);
+    Package addOrUpdatePackage(Package newPackage);
 }
