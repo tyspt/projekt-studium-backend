@@ -15,7 +15,7 @@ public class Person {
     @OneToMany(mappedBy = "sender")
     @JsonIgnore
     private final Collection<Package> outboundPackages = new HashSet<>();
-    @OneToMany
+    @OneToMany(mappedBy = "representative")
     @JsonIgnore
     private final Collection<Person> representativeOf = new HashSet<>();
     private @Id

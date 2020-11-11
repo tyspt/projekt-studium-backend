@@ -1,5 +1,6 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.oth.regensburg.projektstudium.backend.utils.PackageDeserializer;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,16 +20,22 @@ public class Package {
     private PackageType type;
     private String barcode; // Barcode from external providers (e.g. DHL, DPD, etc.)
     private String orderNumber; // Order number in SAP
+
     @ManyToOne
     private Person recipient;
     @ManyToOne
     private Person sender;
+
     @CreationTimestamp
     private LocalDateTime createdTimestamp;
     @UpdateTimestamp
     private LocalDateTime lastUpdatedTimestamp;
     @Enumerated(EnumType.STRING)
     private PackageStatus status = PackageStatus.CREATED;
+
+    @ManyToOne
+    @JsonIgnore
+    private Handover handover;
 
     public Package() {
     }
@@ -121,20 +128,20 @@ public class Package {
         this.status = status;
     }
 
+    public Handover getHandover() {
+        return handover;
+    }
+
+    public void setHandover(Handover handover) {
+        this.handover = handover;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Package aPackage = (Package) o;
-        return id.equals(aPackage.id) &&
-                type == aPackage.type &&
-                Objects.equals(barcode, aPackage.barcode) &&
-                Objects.equals(orderNumber, aPackage.orderNumber) &&
-                Objects.equals(recipient, aPackage.recipient) &&
-                Objects.equals(sender, aPackage.sender) &&
-                Objects.equals(createdTimestamp, aPackage.createdTimestamp) &&
-                Objects.equals(lastUpdatedTimestamp, aPackage.lastUpdatedTimestamp) &&
-                status == aPackage.status;
+        return id.equals(aPackage.id);
     }
 
     @Override

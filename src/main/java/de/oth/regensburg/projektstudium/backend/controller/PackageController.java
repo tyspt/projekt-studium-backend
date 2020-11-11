@@ -8,6 +8,8 @@ import de.oth.regensburg.projektstudium.backend.service.PackageService;
 import de.oth.regensburg.projektstudium.backend.service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public class PackageController {
     }
 
     @PostMapping("/packages")
-    Package add(@RequestBody Package newPackage) {
+    ResponseEntity<Package> add(@RequestBody Package newPackage) {
         Person recipient = newPackage.getRecipient();
         if (recipient.getId() == null) {
             recipient = personService.addPerson(recipient);
@@ -48,7 +50,7 @@ public class PackageController {
             newPackage.setSender(sender);
         }
 
-        return packageService.addOrUpdatePackage(newPackage);
+        return new ResponseEntity<>(packageService.addOrUpdatePackage(newPackage), HttpStatus.CREATED);
     }
 
     @PutMapping("/packages/{idOrBarcode}/status")
