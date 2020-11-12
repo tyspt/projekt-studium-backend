@@ -13,4 +13,8 @@ public interface HandoverService {
     Handover addHandover(Handover newHandover);
 
     Handover addPackage(UUID handoverUuid, String pkgIdOrBarcode);
+
+    Handover confirm(UUID uuid);
+
+    Handover rollback(UUID uuid);
 }

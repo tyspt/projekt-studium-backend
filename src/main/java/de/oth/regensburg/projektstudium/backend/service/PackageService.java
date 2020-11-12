@@ -11,4 +11,6 @@ public interface PackageService {
     Package findOneByIdOrBarcode(String idOrBarcode);
 
     Package addOrUpdatePackage(Package newPackage);
+
+    List<Package> saveAll(Iterable<Package> packages);
 }

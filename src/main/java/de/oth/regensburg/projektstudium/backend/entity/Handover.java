@@ -4,30 +4,26 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 public class Handover {
     @OneToMany(mappedBy = "handover")
-    private final Collection<Package> packages = new HashSet<>();
+    private final Collection<Package> packages = ConcurrentHashMap.newKeySet();
     @Id
     @Type(type = "uuid-char") // Necessary only for mysql
-    @GeneratedValue
     private UUID uuid;
     @CreationTimestamp
     private LocalDateTime createdTimestamp;
     @UpdateTimestamp
     private LocalDateTime lastUpdatedTimestamp;
-    private boolean completed = false;
+    @Enumerated(EnumType.STRING)
+    private HandoverStatus status = HandoverStatus.ON_GOING;
 
     public Handover() {
     }
@@ -74,12 +70,12 @@ public class Handover {
         packages.remove(pkg);
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public HandoverStatus getStatus() {
+        return status;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setStatus(HandoverStatus status) {
+        this.status = status;
     }
 
     @Override
@@ -87,26 +83,22 @@ public class Handover {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Handover handover = (Handover) o;
-        return completed == handover.completed &&
-                uuid.equals(handover.uuid) &&
-                Objects.equals(createdTimestamp, handover.createdTimestamp) &&
-                Objects.equals(lastUpdatedTimestamp, handover.lastUpdatedTimestamp) &&
-                Objects.equals(packages, handover.packages);
+        return uuid.equals(handover.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, createdTimestamp, lastUpdatedTimestamp, packages, completed);
+        return Objects.hash(uuid);
     }
 
     @Override
     public String toString() {
         return "Handover{" +
-                "id=" + uuid +
+                "packages=" + packages +
+                ", uuid=" + uuid +
                 ", createdTimestamp=" + createdTimestamp +
                 ", lastUpdatedTimestamp=" + lastUpdatedTimestamp +
-                ", Packages=" + packages.stream().map(p -> p.getId()).collect(Collectors.toList()) +
-                ", completed=" + completed +
+                ", status=" + status +
                 '}';
     }
 }

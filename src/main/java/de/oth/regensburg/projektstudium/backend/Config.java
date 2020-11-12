@@ -5,6 +5,7 @@ import de.oth.regensburg.projektstudium.backend.entity.Package;
 import de.oth.regensburg.projektstudium.backend.entity.PackageType;
 import de.oth.regensburg.projektstudium.backend.entity.Person;
 import de.oth.regensburg.projektstudium.backend.repository.BuildingRepository;
+import de.oth.regensburg.projektstudium.backend.repository.HandoverRepository;
 import de.oth.regensburg.projektstudium.backend.repository.PackageRepository;
 import de.oth.regensburg.projektstudium.backend.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -12,10 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 public class Config extends WebMvcConfigurerAdapter {
@@ -28,7 +33,12 @@ public class Config extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    CommandLineRunner initDatabase(BuildingRepository buildingRepository, PersonRepository personRepository, PackageRepository packageRepository) {
+    CommandLineRunner initDatabase(
+            BuildingRepository buildingRepository,
+            PersonRepository personRepository,
+            PackageRepository packageRepository,
+            HandoverRepository handoverRepository
+    ) {
         return args -> {
             Building f36 = new Building("F36", "Forschungszentrum", "Bla bla", "Demostraße 42, Regensburg");
             Building d47 = new Building("D47", "Spaßgebaude", "Bla bla", "Spaßstraße 39a, Regensburg");
@@ -49,17 +59,27 @@ public class Config extends WebMvcConfigurerAdapter {
             Package p2 = new Package(PackageType.OUTBOUND, "34343434343434", "SAP9999912313", annamMusterfrau, maxMustermann);
             log.info("Preloading " + packageRepository.save(p1));
             log.info("Preloading " + packageRepository.save(p2));
+
+//            Handover h1 = new Handover(UUID.randomUUID());
+//            h1.addPackage(p1);
+//            h1.addPackage(p2);
+//            handoverRepository.save(h1);
+//            packageRepository.save(p1);
+//            packageRepository.save(p2);
         };
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
-            }
-        };
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        // TODO: Don't do this in production, use a proper list  of allowed origins
+        config.setAllowedOrigins(Collections.singletonList("*"));
+        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
     @Override

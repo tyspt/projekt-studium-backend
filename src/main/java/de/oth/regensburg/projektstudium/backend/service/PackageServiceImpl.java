@@ -44,4 +44,9 @@ public class PackageServiceImpl implements PackageService {
     public Package addOrUpdatePackage(Package newPackage) {
         return repository.save(newPackage);
     }
+
+    @Override
+    public List<Package> saveAll(Iterable<Package> packages) {
+        return repository.saveAll(packages);
+    }
 }
