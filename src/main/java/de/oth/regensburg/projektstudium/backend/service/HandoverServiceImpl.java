@@ -75,7 +75,7 @@ public class HandoverServiceImpl implements HandoverService {
             pkg.setStatus(
                     pkg.getType() == PackageType.INBOUND ?
                             PackageStatus.IN_TRANSPORT :
-                            PackageStatus.RECEIVED_BY_LOGISTIC_CENTER);
+                            PackageStatus.RECEIVED_BY_LC);
         }
         handover.setStatus(HandoverStatus.COMPLETED);
 

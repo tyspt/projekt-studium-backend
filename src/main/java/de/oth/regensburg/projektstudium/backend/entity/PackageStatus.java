@@ -9,5 +9,5 @@ public enum PackageStatus {
     NOT_DELIVERABLE,
 
     COLLECTED,
-    RECEIVED_BY_LOGISTIC_CENTER
+    RECEIVED_BY_LC
 }
