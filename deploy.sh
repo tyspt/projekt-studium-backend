@@ -8,4 +8,4 @@ ssh -t tony@jiaweitang.com << EOF
     java -jar projektstudium.backend*.jar > /dev/null 2>&1 &
 EOF
 
-read -p "done!"
+echo "done!"
