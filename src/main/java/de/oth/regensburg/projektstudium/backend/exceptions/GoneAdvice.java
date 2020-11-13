@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class InvalidRequestAdvice {
+public class GoneAdvice {
     @ResponseBody
-    @ExceptionHandler(InvalidRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String invalidRequestHandler(InvalidRequestException ex) {
+    @ExceptionHandler(GoneException.class)
+    @ResponseStatus(HttpStatus.GONE)
+    String invalidRequestHandler(GoneException ex) {
         return ex.getMessage();
     }
 }

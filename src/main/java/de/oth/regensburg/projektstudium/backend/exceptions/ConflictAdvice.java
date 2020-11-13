@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class InvalidRequestAdvice {
+public class ConflictAdvice {
     @ResponseBody
-    @ExceptionHandler(InvalidRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String invalidRequestHandler(InvalidRequestException ex) {
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    String invalidRequestHandler(ConflictException ex) {
         return ex.getMessage();
     }
 }

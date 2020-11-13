@@ -2,6 +2,8 @@ package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Package;
 import de.oth.regensburg.projektstudium.backend.entity.*;
+import de.oth.regensburg.projektstudium.backend.exceptions.ForbiddenException;
+import de.oth.regensburg.projektstudium.backend.exceptions.GoneException;
 import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;
 import de.oth.regensburg.projektstudium.backend.repository.HandoverRepository;
 import org.slf4j.Logger;
@@ -50,13 +52,14 @@ public class HandoverServiceImpl implements HandoverService {
         final Handover handover = this.findOneByUuid(handoverUuid);
         final Package pkg = this.packageService.findOneByIdOrBarcode(pkgIdOrBarcode);
 
-//        // TODO: Remove status check for now, add back later when needed
-//        final boolean isActionValid =
-//                (pkg.getType() == PackageType.INBOUND && pkg.getStatus() == PackageStatus.CREATED) ||
-//                        (pkg.getType() == PackageType.OUTBOUND && pkg.getStatus() == PackageStatus.COLLECTED);
-//        if (!isActionValid) {
-//            throw new InvalidRequestException("Package is in wrong status, action is not allowed");
-//        }
+        if (handover.getStatus() != HandoverStatus.ON_GOING) {
+            throw new GoneException("Handover " + handoverUuid + " is already completed or cancelled");
+        }
+
+        final boolean isActionValid = (pkg.getStatus() == PackageStatus.CREATED || pkg.getStatus() == PackageStatus.COLLECTED);
+        if (!isActionValid) {
+            throw new ForbiddenException("Package #" + pkgIdOrBarcode + " is in wrong status: " + pkg.getStatus() + ", handover is not allowed");
+        }
 
         pkg.setStatus(PackageStatus.IN_HANDOVER);
         handover.addPackage(pkg);

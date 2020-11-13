@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class InvalidRequestAdvice {
+public class ForbiddenAdvice {
     @ResponseBody
-    @ExceptionHandler(InvalidRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String invalidRequestHandler(InvalidRequestException ex) {
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String invalidRequestHandler(ForbiddenException ex) {
         return ex.getMessage();
     }
 }
