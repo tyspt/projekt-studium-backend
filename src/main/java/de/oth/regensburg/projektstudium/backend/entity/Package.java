@@ -33,7 +33,8 @@ import java.util.Objects;
 )
 public class Package {
     private @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "package_generator")
+    @SequenceGenerator(name = "package_generator", sequenceName = "package_seq", initialValue = 10001, allocationSize = 10)
     Long id; // ID used for internal tracking which is also printed as a QR code on the package
     @Enumerated(EnumType.STRING)
     private PackageType type;
