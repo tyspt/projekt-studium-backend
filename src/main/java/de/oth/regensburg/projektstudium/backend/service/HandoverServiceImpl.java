@@ -64,12 +64,14 @@ public class HandoverServiceImpl implements HandoverService {
         final Package pkg = this.packageService.findOneByIdOrBarcode(pkgIdOrBarcode);
 
         if (handover.getStatus() != HandoverStatus.ON_GOING) {
-            throw new GoneException("Handover " + handoverUuid + " is already completed or cancelled");
+            throw new GoneException("Handover " + handoverUuid + " is already completed or cancelled.");
         }
 
-        final boolean isActionValid = (pkg.getStatus() == PackageStatus.CREATED || pkg.getStatus() == PackageStatus.COLLECTED);
+        final boolean isActionValid = (pkg.getType() == PackageType.INBOUND && pkg.getStatus() == PackageStatus.CREATED) ||
+                (pkg.getType() == PackageType.OUTBOUND && pkg.getStatus() == PackageStatus.COLLECTED);
         if (!isActionValid) {
-            throw new ForbiddenException("Package #" + pkgIdOrBarcode + " is in wrong status: " + pkg.getStatus() + ", handover is not allowed");
+            throw new ForbiddenException("Package #" + pkgIdOrBarcode + " is in wrong status: " + pkg.getStatus() + " (" + pkg.getType().toString().toLowerCase() +
+                    "), handover is only allow for inbound packages with CREATED or outbound packages with COLLECTED status.");
         }
 
         pkg.setStatus(PackageStatus.IN_HANDOVER);
