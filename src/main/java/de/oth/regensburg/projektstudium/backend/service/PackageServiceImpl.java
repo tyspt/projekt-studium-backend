@@ -1,6 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Package;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;
 import de.oth.regensburg.projektstudium.backend.repository.PackageRepository;
 import org.slf4j.Logger;
@@ -15,25 +16,25 @@ import java.util.Optional;
 public class PackageServiceImpl implements PackageService {
 
     private static final Logger log = LoggerFactory.getLogger(PackageServiceImpl.class);
-    private final PackageRepository repository;
+    private final PackageRepository packageRepository;
 
-    public PackageServiceImpl(PackageRepository repository) {
-        this.repository = repository;
+    public PackageServiceImpl(PackageRepository packageRepository) {
+        this.packageRepository = packageRepository;
     }
 
     @Override
     public List<Package> findAll() {
-        return repository.findAll();
+        return packageRepository.findAll();
     }
 
     @Override
     public Package findOneByIdOrBarcode(String idOrBarcode) {
         Long id = Long.valueOf(idOrBarcode);
-        Optional<Package> resById = repository.findById(id);
+        Optional<Package> resById = packageRepository.findById(id);
 
         Package pkg = new Package();
         pkg.setBarcode(idOrBarcode);
-        Optional<Package> resByBarcode = repository.findOne(Example.of(pkg));
+        Optional<Package> resByBarcode = packageRepository.findOne(Example.of(pkg));
 
         return resById
                 .orElseGet(() -> resByBarcode
@@ -41,12 +42,21 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public Package addOrUpdatePackage(Package newPackage) {
-        return repository.save(newPackage);
+    public Package addPackage(Package newPackage) {
+        return packageRepository.save(newPackage);
     }
 
     @Override
-    public List<Package> saveAll(Iterable<Package> packages) {
-        return repository.saveAll(packages);
+    public Package updateStatus(String idOrBarcode, PackageStatus newStatus) {
+        final Package dbPackage = this.findOneByIdOrBarcode(idOrBarcode);
+
+        switch (newStatus) {
+            case COLLECTED:
+            default:
+                break;
+        }
+
+        dbPackage.setStatus(newStatus);
+        return packageRepository.save(dbPackage);
     }
 }

@@ -1,6 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Package;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface PackageService {
 
     Package findOneByIdOrBarcode(String idOrBarcode);
 
-    Package addOrUpdatePackage(Package newPackage);
+    Package addPackage(Package newPackage);
 
-    List<Package> saveAll(Iterable<Package> packages);
+    Package updateStatus(String idOrBarcode, PackageStatus newStatus);
 }

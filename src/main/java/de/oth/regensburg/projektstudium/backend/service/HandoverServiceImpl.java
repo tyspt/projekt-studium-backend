@@ -76,8 +76,6 @@ public class HandoverServiceImpl implements HandoverService {
 
         pkg.setStatus(PackageStatus.IN_HANDOVER);
         handover.addPackage(pkg);
-
-        packageService.addOrUpdatePackage(pkg);
         return handoverRepository.save(handover);
     }
 

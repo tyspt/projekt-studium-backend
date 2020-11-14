@@ -44,8 +44,8 @@ public class HandoverController {
             throw new BadRequestException();
         }
 
-        UUID uHandoverUuid;
-        Long lDriverId;
+        final UUID uHandoverUuid;
+        final Long lDriverId;
         try {
             uHandoverUuid = UUID.fromString(handoverUuidJson.get("uuid").asText());
             lDriverId = Long.valueOf(driverId);
