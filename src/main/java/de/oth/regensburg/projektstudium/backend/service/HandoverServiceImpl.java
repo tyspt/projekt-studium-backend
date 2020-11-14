@@ -23,31 +23,38 @@ import java.util.UUID;
 public class HandoverServiceImpl implements HandoverService {
 
     private static final Logger log = LoggerFactory.getLogger(HandoverServiceImpl.class);
-    private final HandoverRepository repository;
+    private final HandoverRepository handoverRepository;
     private final PackageService packageService;
+    private final DriverService driverService;
 
     public HandoverServiceImpl(
-            HandoverRepository repository,
-            PackageService packageService
+            HandoverRepository handoverRepository,
+            PackageService packageService,
+            DriverService driverService
     ) {
-        this.repository = repository;
+        this.handoverRepository = handoverRepository;
         this.packageService = packageService;
+        this.driverService = driverService;
     }
 
     @Override
     public List<Handover> findAll() {
-        return repository.findAll();
+        return handoverRepository.findAll();
     }
 
     @Override
     public Handover findOneByUuid(UUID uuid) {
-        return repository.findById(uuid).orElseThrow(
+        return handoverRepository.findById(uuid).orElseThrow(
                 () -> new NotFoundException(Handover.class));
     }
 
     @Override
-    public Handover addHandover(Handover newHandover) {
-        return repository.save(newHandover);
+    public Handover addHandover(UUID handoverUuid, Long driverId) {
+        final Driver driver = driverService.findOneById(driverId);
+        Handover handover = new Handover();
+        handover.setUuid(handoverUuid);
+        handover.setDriver(driver);
+        return handoverRepository.save(handover);
     }
 
     @Override
@@ -69,7 +76,7 @@ public class HandoverServiceImpl implements HandoverService {
         handover.addPackage(pkg);
 
         packageService.addOrUpdatePackage(pkg);
-        return repository.save(handover);
+        return handoverRepository.save(handover);
     }
 
     @Override
@@ -87,7 +94,7 @@ public class HandoverServiceImpl implements HandoverService {
             pkg.setDriver(driver);
         }
         handover.setStatus(HandoverStatus.COMPLETED);
-        return repository.save(handover);
+        return handoverRepository.save(handover);
     }
 
     @Override
@@ -106,6 +113,6 @@ public class HandoverServiceImpl implements HandoverService {
 
         handover.getPackages().clear();
         handover.setStatus(HandoverStatus.CANCELED);
-        return repository.save(handover);
+        return handoverRepository.save(handover);
     }
 }

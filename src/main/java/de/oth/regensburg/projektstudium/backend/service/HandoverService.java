@@ -10,7 +10,7 @@ public interface HandoverService {
 
     Handover findOneByUuid(UUID uuid);
 
-    Handover addHandover(Handover newHandover);
+    Handover addHandover(UUID handoverUuid, Long driverId);
 
     Handover addPackage(UUID handoverUuid, String pkgIdOrBarcode);
 

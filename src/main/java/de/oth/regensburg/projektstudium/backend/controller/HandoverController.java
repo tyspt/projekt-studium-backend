@@ -1,7 +1,6 @@
 package de.oth.regensburg.projektstudium.backend.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import de.oth.regensburg.projektstudium.backend.entity.Driver;
 import de.oth.regensburg.projektstudium.backend.entity.Handover;
 import de.oth.regensburg.projektstudium.backend.exceptions.InvalidRequestException;
 import de.oth.regensburg.projektstudium.backend.service.DriverService;
@@ -54,12 +53,8 @@ public class HandoverController {
             throw new InvalidRequestException();
         }
 
-        final Driver driver = driverService.findOneById(lDriverId);
-
-        Handover handover = new Handover();
-        handover.setUuid(uHandoverUuid);
-        handover.setDriver(driver);
-        return new ResponseEntity<>(handoverService.addHandover(handover), HttpStatus.CREATED);
+        return new ResponseEntity<>(handoverService.addHandover(uHandoverUuid, lDriverId),
+                HttpStatus.CREATED);
     }
 
     @PutMapping("/{uuid}")
