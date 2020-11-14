@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("packages")
 public class PackageController {
 
     private static final Logger log = LoggerFactory.getLogger(PackageController.class);
@@ -26,17 +27,17 @@ public class PackageController {
         this.personService = personService;
     }
 
-    @GetMapping("/packages")
+    @GetMapping("/")
     List<Package> findAll() {
         return packageService.findAll();
     }
 
-    @GetMapping("/packages/{idOrBarcode}")
+    @GetMapping("/{idOrBarcode}")
     Package findOneByIdOrBarcode(@PathVariable("idOrBarcode") String idOrBarcode) {
         return packageService.findOneByIdOrBarcode(idOrBarcode);
     }
 
-    @PostMapping("/packages")
+    @PostMapping("/")
     ResponseEntity<Package> add(@RequestBody Package newPackage) {
         Person recipient = newPackage.getRecipient();
         if (recipient.getId() == null) {
@@ -53,7 +54,7 @@ public class PackageController {
         return new ResponseEntity<>(packageService.addOrUpdatePackage(newPackage), HttpStatus.CREATED);
     }
 
-    @PutMapping("/packages/{idOrBarcode}/status")
+    @PutMapping("/{idOrBarcode}/status")
     Package updateStatus(@PathVariable("idOrBarcode") String idOrBarcode,
                          @RequestBody Package newPackage) {
         if (newPackage == null || newPackage.getStatus() == null) {

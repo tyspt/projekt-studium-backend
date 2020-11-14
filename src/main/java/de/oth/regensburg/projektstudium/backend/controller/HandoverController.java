@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("handovers")
 public class HandoverController {
     private static final Logger log = LoggerFactory.getLogger(HandoverController.class);
     private final HandoverService handoverService;
@@ -21,17 +22,17 @@ public class HandoverController {
         this.handoverService = handoverService;
     }
 
-    @GetMapping("/handovers")
+    @GetMapping("/")
     List<Handover> findAll() {
         return handoverService.findAll();
     }
 
-    @GetMapping("/handovers/{uuid}")
+    @GetMapping("/{uuid}")
     Handover findOneByUuid(@PathVariable("uuid") UUID uuid) {
         return handoverService.findOneByUuid(uuid);
     }
 
-    @PostMapping("/handovers")
+    @PostMapping("/")
     ResponseEntity<Handover> addHandover(@RequestBody Handover newHandover) {
         if (newHandover == null || newHandover.getUuid() == null) {
             throw new InvalidRequestException();
@@ -39,20 +40,20 @@ public class HandoverController {
         return new ResponseEntity<>(handoverService.addHandover(newHandover), HttpStatus.CREATED);
     }
 
-    @PutMapping("/handovers/{uuid}/packages/{idOrBarcode}")
+    @PutMapping("/{uuid}/packages/{idOrBarcode}")
     Handover addPackage(
             @PathVariable("uuid") UUID uuid,
             @PathVariable("idOrBarcode") String idOrBarcode) {
         return handoverService.addPackage(uuid, idOrBarcode);
     }
 
-    @PutMapping("/handovers/{uuid}/confirm")
+    @PutMapping("/{uuid}/confirm")
     Handover confirm(
             @PathVariable("uuid") UUID uuid) {
         return handoverService.confirm(uuid);
     }
 
-    @PutMapping("/handovers/{uuid}/rollback")
+    @PutMapping("/{uuid}/rollback")
     Handover rollback(
             @PathVariable("uuid") UUID uuid) {
         return handoverService.rollback(uuid);
