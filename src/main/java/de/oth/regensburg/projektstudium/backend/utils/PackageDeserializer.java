@@ -4,8 +4,11 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import de.oth.regensburg.projektstudium.backend.entity.Building;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
-import de.oth.regensburg.projektstudium.backend.entity.*;
+import de.oth.regensburg.projektstudium.backend.entity.Person;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
 
 import java.io.IOException;
 

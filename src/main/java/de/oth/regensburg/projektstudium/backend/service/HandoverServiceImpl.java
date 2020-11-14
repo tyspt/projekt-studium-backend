@@ -1,7 +1,11 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
+import de.oth.regensburg.projektstudium.backend.entity.Driver;
+import de.oth.regensburg.projektstudium.backend.entity.Handover;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
-import de.oth.regensburg.projektstudium.backend.entity.*;
+import de.oth.regensburg.projektstudium.backend.entity.enums.HandoverStatus;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
 import de.oth.regensburg.projektstudium.backend.exceptions.ForbiddenException;
 import de.oth.regensburg.projektstudium.backend.exceptions.GoneException;
 import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;

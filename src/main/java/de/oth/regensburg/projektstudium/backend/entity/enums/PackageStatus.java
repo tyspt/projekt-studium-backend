@@ -1,4 +1,4 @@
-package de.oth.regensburg.projektstudium.backend.entity;
+package de.oth.regensburg.projektstudium.backend.entity.enums;
 
 public enum PackageStatus {
     CREATED,

@@ -1,7 +1,10 @@
 package de.oth.regensburg.projektstudium.backend;
 
+import de.oth.regensburg.projektstudium.backend.entity.Building;
+import de.oth.regensburg.projektstudium.backend.entity.Driver;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
-import de.oth.regensburg.projektstudium.backend.entity.*;
+import de.oth.regensburg.projektstudium.backend.entity.Person;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
 import de.oth.regensburg.projektstudium.backend.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

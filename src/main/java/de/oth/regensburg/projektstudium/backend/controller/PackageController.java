@@ -2,7 +2,6 @@ package de.oth.regensburg.projektstudium.backend.controller;
 
 import de.oth.regensburg.projektstudium.backend.entity.Package;
 import de.oth.regensburg.projektstudium.backend.entity.Person;
-import de.oth.regensburg.projektstudium.backend.service.DriverService;
 import de.oth.regensburg.projektstudium.backend.service.PackageService;
 import de.oth.regensburg.projektstudium.backend.service.PersonService;
 import org.slf4j.Logger;

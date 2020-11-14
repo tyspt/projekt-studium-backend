@@ -1,5 +1,6 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
+import de.oth.regensburg.projektstudium.backend.entity.enums.HandoverStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
