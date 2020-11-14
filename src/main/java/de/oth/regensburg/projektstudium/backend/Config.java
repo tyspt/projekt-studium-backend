@@ -46,7 +46,7 @@ public class Config extends WebMvcConfigurerAdapter {
 
             Person secretary = new Person("Lisa Sekretärin", "lisa.sekretaerin@demo.de", "333333", f36, "Demostraße 42, F36/2/8, Regensburg");
             Person maxMustermann = new Person("Max Mustermann", "max.mustermann@demo.de", "11111111", f36, "Demostraße 42, F36/2/8, Regensburg");
-            Person annamMusterfrau = new Person("Annam Musterfrau", "anna.musterfrau@demo.de", "22222222", d47, "Spaßstraße 39a, D47/6/3, Regensburg");
+            Person annamMusterfrau = new Person("Anna Musterfrau", "anna.musterfrau@demo.de", "22222222", d47, "Spaßstraße 39a, D47/6/3, Regensburg");
             log.info("Preloading " + personRepository.save(secretary));
             log.info("Preloading " + personRepository.save(maxMustermann));
             log.info("Preloading " + personRepository.save(annamMusterfrau));
