@@ -2,7 +2,7 @@ package de.oth.regensburg.projektstudium.backend.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.oth.regensburg.projektstudium.backend.entity.Handover;
-import de.oth.regensburg.projektstudium.backend.exceptions.InvalidRequestException;
+import de.oth.regensburg.projektstudium.backend.exceptions.BadRequestException;
 import de.oth.regensburg.projektstudium.backend.service.DriverService;
 import de.oth.regensburg.projektstudium.backend.service.HandoverService;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class HandoverController {
     ResponseEntity<Handover> addHandover(@RequestHeader("Driver-ID") String driverId,
                                          @RequestBody ObjectNode handoverUuidJson) {
         if (handoverUuidJson == null || !handoverUuidJson.has("uuid") || StringUtils.isEmpty(driverId)) {
-            throw new InvalidRequestException();
+            throw new BadRequestException();
         }
 
         UUID uHandoverUuid;
@@ -50,7 +50,7 @@ public class HandoverController {
             uHandoverUuid = UUID.fromString(handoverUuidJson.get("uuid").asText());
             lDriverId = Long.valueOf(driverId);
         } catch (Exception e) {
-            throw new InvalidRequestException();
+            throw new BadRequestException();
         }
 
         return new ResponseEntity<>(handoverService.addHandover(uHandoverUuid, lDriverId),
@@ -61,7 +61,7 @@ public class HandoverController {
     Handover addPackage(@PathVariable("uuid") UUID uuid,
                         @RequestBody ObjectNode idOrBarcodeJson) {
         if (idOrBarcodeJson == null || !idOrBarcodeJson.has("idOrBarcode")) {
-            throw new InvalidRequestException();
+            throw new BadRequestException();
         }
         final String idOrBarcode = idOrBarcodeJson.get("idOrBarcode").asText();
         return handoverService.addPackage(uuid, idOrBarcode);

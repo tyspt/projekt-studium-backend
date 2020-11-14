@@ -1,12 +1,12 @@
 package de.oth.regensburg.projektstudium.backend.exceptions;
 
-public class InvalidRequestException extends RuntimeException {
+public class BadRequestException extends RuntimeException {
 
-    public InvalidRequestException() {
+    public BadRequestException() {
         super("Invalid Request Body");
     }
 
-    public InvalidRequestException(String extraMsg) {
+    public BadRequestException(String extraMsg) {
         super("Invalid Request Body: " + extraMsg);
     }
 }
