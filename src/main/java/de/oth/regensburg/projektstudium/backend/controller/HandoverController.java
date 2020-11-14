@@ -1,5 +1,6 @@
 package de.oth.regensburg.projektstudium.backend.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.oth.regensburg.projektstudium.backend.entity.Handover;
 import de.oth.regensburg.projektstudium.backend.exceptions.InvalidRequestException;
 import de.oth.regensburg.projektstudium.backend.service.HandoverService;
@@ -40,16 +41,18 @@ public class HandoverController {
         return new ResponseEntity<>(handoverService.addHandover(newHandover), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{uuid}/packages/{idOrBarcode}")
-    Handover addPackage(
-            @PathVariable("uuid") UUID uuid,
-            @PathVariable("idOrBarcode") String idOrBarcode) {
+    @PutMapping("/{uuid}")
+    Handover addPackage(@PathVariable("uuid") UUID uuid,
+                        @RequestBody ObjectNode idOrBarcodeJson) {
+        if (idOrBarcodeJson == null || !idOrBarcodeJson.has("idOrBarcode")) {
+            throw new InvalidRequestException();
+        }
+        final String idOrBarcode = idOrBarcodeJson.get("idOrBarcode").asText();
         return handoverService.addPackage(uuid, idOrBarcode);
     }
 
     @PutMapping("/{uuid}/confirm")
-    Handover confirm(
-            @PathVariable("uuid") UUID uuid) {
+    Handover confirm(@PathVariable("uuid") UUID uuid) {
         return handoverService.confirm(uuid);
     }
 
