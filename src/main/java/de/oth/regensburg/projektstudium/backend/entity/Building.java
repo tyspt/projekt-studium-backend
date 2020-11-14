@@ -1,20 +1,16 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 
-@Entity
+@Document
 public class Building {
-    @OneToMany(mappedBy = "building")
-    @JsonIgnore
+
     private final Collection<Person> people = new HashSet<>();
-    private @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private String id;
     private String shortName;
     private String fullName;
     private String description;
@@ -30,11 +26,11 @@ public class Building {
         this.address = address;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -79,12 +75,7 @@ public class Building {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Building building = (Building) o;
-        return id.equals(building.id) &&
-                Objects.equals(shortName, building.shortName) &&
-                Objects.equals(fullName, building.fullName) &&
-                Objects.equals(description, building.description) &&
-                Objects.equals(address, building.address) &&
-                Objects.equals(people, building.people);
+        return id.equals(building.id);
     }
 
     @Override

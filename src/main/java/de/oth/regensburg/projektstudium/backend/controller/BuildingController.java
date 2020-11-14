@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -21,12 +23,12 @@ public class BuildingController {
     }
 
     @GetMapping("/buildings")
-    List<Building> findAll() {
+    Flux<Building> findAll() {
         return buildingService.findAll();
     }
 
     @GetMapping("/buildings/{id}")
-    Building findOneById(@PathVariable("id") Long id) {
+    Mono<Building> findOneById(@PathVariable("id") String id) {
         return buildingService.findOneById(id);
     }
 }

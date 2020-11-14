@@ -1,11 +1,11 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Building;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface BuildingService {
-    List<Building> findAll();
+    Flux<Building> findAll();
 
-    Building findOneById(Long id);
+    Mono<Building> findOneById(String id);
 }

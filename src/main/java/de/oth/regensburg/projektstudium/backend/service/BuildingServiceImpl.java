@@ -6,6 +6,8 @@ import de.oth.regensburg.projektstudium.backend.repository.BuildingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -20,13 +22,12 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public List<Building> findAll() {
+    public Flux<Building> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Building findOneById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(Building.class));
+    public Mono<Building> findOneById(String id) {
+        return repository.findById(id);
     }
 }
