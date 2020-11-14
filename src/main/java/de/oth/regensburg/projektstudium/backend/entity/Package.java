@@ -12,6 +12,22 @@ import java.util.Objects;
 
 @Entity
 @JsonDeserialize(using = PackageDeserializer.class)
+@NamedEntityGraph(
+        name = "package-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "recipient", subgraph = "person-subgraph"),
+                @NamedAttributeNode(value = "sender", subgraph = "person-subgraph"),
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "person-subgraph",
+                        attributeNodes = {
+                                @NamedAttributeNode("building"),
+                                @NamedAttributeNode("representative")
+                        }
+                )
+        }
+)
 public class Package {
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
