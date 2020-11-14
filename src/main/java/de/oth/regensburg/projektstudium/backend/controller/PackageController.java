@@ -1,9 +1,8 @@
 package de.oth.regensburg.projektstudium.backend.controller;
 
 import de.oth.regensburg.projektstudium.backend.entity.Package;
-import de.oth.regensburg.projektstudium.backend.entity.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.entity.Person;
-import de.oth.regensburg.projektstudium.backend.exceptions.InvalidRequestException;
+import de.oth.regensburg.projektstudium.backend.service.DriverService;
 import de.oth.regensburg.projektstudium.backend.service.PackageService;
 import de.oth.regensburg.projektstudium.backend.service.PersonService;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ public class PackageController {
         this.personService = personService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     List<Package> findAll() {
         return packageService.findAll();
     }
@@ -37,7 +36,7 @@ public class PackageController {
         return packageService.findOneByIdOrBarcode(idOrBarcode);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     ResponseEntity<Package> add(@RequestBody Package newPackage) {
         Person recipient = newPackage.getRecipient();
         if (recipient.getId() == null) {
@@ -52,19 +51,5 @@ public class PackageController {
         }
 
         return new ResponseEntity<>(packageService.addOrUpdatePackage(newPackage), HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{idOrBarcode}/status")
-    Package updateStatus(@PathVariable("idOrBarcode") String idOrBarcode,
-                         @RequestBody Package newPackage) {
-        if (newPackage == null || newPackage.getStatus() == null) {
-            throw new InvalidRequestException();
-        }
-
-        final PackageStatus newStatus = newPackage.getStatus();
-        final Package dbPackage = packageService.findOneByIdOrBarcode(idOrBarcode);
-
-        dbPackage.setStatus(newStatus);
-        return packageService.addOrUpdatePackage(dbPackage);
     }
 }

@@ -17,13 +17,14 @@ import java.util.Objects;
         attributeNodes = {
                 @NamedAttributeNode(value = "recipient", subgraph = "person-subgraph"),
                 @NamedAttributeNode(value = "sender", subgraph = "person-subgraph"),
+                @NamedAttributeNode("driver"),
         },
         subgraphs = {
                 @NamedSubgraph(
                         name = "person-subgraph",
                         attributeNodes = {
                                 @NamedAttributeNode("building"),
-                                @NamedAttributeNode("representative")
+                                @NamedAttributeNode(value = "representative")
                         }
                 )
         }
@@ -52,6 +53,8 @@ public class Package {
     @ManyToOne
     @JsonIgnore
     private Handover handover;
+    @ManyToOne
+    private Driver driver;
 
     public Package() {
     }
@@ -150,6 +153,18 @@ public class Package {
 
     public void setHandover(Handover handover) {
         this.handover = handover;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        if (this.driver != null) {
+            this.driver.getAssignedPackages().remove(driver);
+        }
+        driver.getAssignedPackages().add(this);
+        this.driver = driver;
     }
 
     @Override

@@ -1,13 +1,16 @@
 package de.oth.regensburg.projektstudium.backend.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import de.oth.regensburg.projektstudium.backend.entity.Driver;
 import de.oth.regensburg.projektstudium.backend.entity.Handover;
 import de.oth.regensburg.projektstudium.backend.exceptions.InvalidRequestException;
+import de.oth.regensburg.projektstudium.backend.service.DriverService;
 import de.oth.regensburg.projektstudium.backend.service.HandoverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +21,14 @@ import java.util.UUID;
 public class HandoverController {
     private static final Logger log = LoggerFactory.getLogger(HandoverController.class);
     private final HandoverService handoverService;
+    private final DriverService driverService;
 
-    public HandoverController(HandoverService handoverService) {
+    public HandoverController(HandoverService handoverService, DriverService driverService) {
         this.handoverService = handoverService;
+        this.driverService = driverService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     List<Handover> findAll() {
         return handoverService.findAll();
     }
@@ -33,12 +38,28 @@ public class HandoverController {
         return handoverService.findOneByUuid(uuid);
     }
 
-    @PostMapping("/")
-    ResponseEntity<Handover> addHandover(@RequestBody Handover newHandover) {
-        if (newHandover == null || newHandover.getUuid() == null) {
+    @PostMapping("")
+    ResponseEntity<Handover> addHandover(@RequestHeader("Driver-ID") String driverId,
+                                         @RequestBody ObjectNode handoverUuidJson) {
+        if (handoverUuidJson == null || !handoverUuidJson.has("uuid") || StringUtils.isEmpty(driverId)) {
             throw new InvalidRequestException();
         }
-        return new ResponseEntity<>(handoverService.addHandover(newHandover), HttpStatus.CREATED);
+
+        UUID uHandoverUuid;
+        Long lDriverId;
+        try {
+            uHandoverUuid = UUID.fromString(handoverUuidJson.get("uuid").asText());
+            lDriverId = Long.valueOf(driverId);
+        } catch (Exception e) {
+            throw new InvalidRequestException();
+        }
+
+        final Driver driver = driverService.findOneById(lDriverId);
+
+        Handover handover = new Handover();
+        handover.setUuid(uHandoverUuid);
+        handover.setDriver(driver);
+        return new ResponseEntity<>(handoverService.addHandover(handover), HttpStatus.CREATED);
     }
 
     @PutMapping("/{uuid}")

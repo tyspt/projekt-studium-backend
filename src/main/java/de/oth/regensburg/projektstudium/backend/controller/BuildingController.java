@@ -22,7 +22,7 @@ public class BuildingController {
         this.buildingService = buildingService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     List<Building> findAll() {
         return buildingService.findAll();
     }

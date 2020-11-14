@@ -21,7 +21,7 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     List<Person> findAll() {
         return personService.findAll();
     }

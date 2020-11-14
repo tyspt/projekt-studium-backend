@@ -73,16 +73,16 @@ public class HandoverServiceImpl implements HandoverService {
     public Handover confirm(UUID uuid) {
         final Handover handover = this.findOneByUuid(uuid);
         final Collection<Package> packages = handover.getPackages();
+        final Driver driver = handover.getDriver();
 
         for (Package pkg : packages) {
             pkg.setStatus(
                     pkg.getType() == PackageType.INBOUND ?
                             PackageStatus.IN_TRANSPORT :
                             PackageStatus.RECEIVED_BY_LC);
+            pkg.setDriver(driver);
         }
         handover.setStatus(HandoverStatus.COMPLETED);
-
-        packageService.saveAll(packages);
         return repository.save(handover);
     }
 
@@ -102,8 +102,6 @@ public class HandoverServiceImpl implements HandoverService {
 
         handover.getPackages().clear();
         handover.setStatus(HandoverStatus.CANCELED);
-
-        packageService.saveAll(packages);
         return repository.save(handover);
     }
 }

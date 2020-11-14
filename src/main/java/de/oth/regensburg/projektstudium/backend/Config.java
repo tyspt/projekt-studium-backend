@@ -1,13 +1,8 @@
 package de.oth.regensburg.projektstudium.backend;
 
-import de.oth.regensburg.projektstudium.backend.entity.Building;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
-import de.oth.regensburg.projektstudium.backend.entity.PackageType;
-import de.oth.regensburg.projektstudium.backend.entity.Person;
-import de.oth.regensburg.projektstudium.backend.repository.BuildingRepository;
-import de.oth.regensburg.projektstudium.backend.repository.HandoverRepository;
-import de.oth.regensburg.projektstudium.backend.repository.PackageRepository;
-import de.oth.regensburg.projektstudium.backend.repository.PersonRepository;
+import de.oth.regensburg.projektstudium.backend.entity.*;
+import de.oth.regensburg.projektstudium.backend.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -37,7 +32,8 @@ public class Config extends WebMvcConfigurerAdapter {
             BuildingRepository buildingRepository,
             PersonRepository personRepository,
             PackageRepository packageRepository,
-            HandoverRepository handoverRepository
+            HandoverRepository handoverRepository,
+            DriverRepository driverRepository
     ) {
         return args -> {
             Building f36 = new Building("F36", "Forschungszentrum", "Bla bla", "Demostraße 42, Regensburg");
@@ -66,6 +62,9 @@ public class Config extends WebMvcConfigurerAdapter {
 //            handoverRepository.save(h1);
 //            packageRepository.save(p1);
 //            packageRepository.save(p2);
+
+            Driver d1 = new Driver("Demo Driver 1", "driver1@demo.de", "d123456789", "Best Logistics Ltd.");
+            log.info("Preloading " + driverRepository.save(d1));
         };
     }
 

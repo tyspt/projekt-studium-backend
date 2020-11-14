@@ -25,6 +25,9 @@ public class Handover {
     @Enumerated(EnumType.STRING)
     private HandoverStatus status = HandoverStatus.ON_GOING;
 
+    @ManyToOne
+    private Driver driver;
+
     public Handover() {
     }
 
@@ -76,6 +79,18 @@ public class Handover {
 
     public void setStatus(HandoverStatus status) {
         this.status = status;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        if (this.driver != null) {
+            this.driver.getHandovers().remove(this);
+        }
+        driver.getHandovers().add(this);
+        this.driver = driver;
     }
 
     @Override
