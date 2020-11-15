@@ -1,16 +1,20 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
+import de.oth.regensburg.projektstudium.backend.dto.PackageDTO;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface PackageService {
 
-    List<Package> findAll();
+    List<PackageDTO> findAll();
 
-    Package findOneByIdOrBarcode(String idOrBarcode);
+    PackageDTO findPackageDTOByIdOrBarcode(String idOrBarcode);
 
-    Package addPackage(Package newPackage);
+    Package findPackageByIdOrBarcode(String idOrBarcode);
 
-    Package collectPackage(String idOrBarcode, Long driverId);
+    PackageDTO addPackage(PackageDTO newPackage) throws ParseException;
+
+    PackageDTO collectPackage(String idOrBarcode, Long driverId);
 }

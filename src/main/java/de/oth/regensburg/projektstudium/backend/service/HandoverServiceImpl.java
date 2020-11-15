@@ -61,7 +61,7 @@ public class HandoverServiceImpl implements HandoverService {
     @Transactional
     public Handover addPackage(UUID handoverUuid, String pkgIdOrBarcode) {
         final Handover handover = this.findOneByUuid(handoverUuid);
-        final Package pkg = this.packageService.findOneByIdOrBarcode(pkgIdOrBarcode);
+        final Package pkg = this.packageService.findPackageByIdOrBarcode(pkgIdOrBarcode);
 
         if (handover.getStatus() != HandoverStatus.ON_GOING) {
             throw new GoneException("Handover " + handoverUuid + " is already completed or cancelled.");

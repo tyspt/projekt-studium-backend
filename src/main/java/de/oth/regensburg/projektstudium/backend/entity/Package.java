@@ -38,6 +38,8 @@ public class Package {
     Long id; // ID used for internal tracking which is also printed as a QR code on the package
     @Enumerated(EnumType.STRING)
     private PackageType type;
+
+    @Column(unique=true)
     private String barcode; // Barcode from external providers (e.g. DHL, DPD, etc.)
     private String orderNumber; // Order number in SAP
 
