@@ -62,7 +62,7 @@ public class Config extends WebMvcConfigurerAdapter {
                 Package p1 = new Package(PackageType.INBOUND, Integer.toString(random.nextInt(999999999)), "SAP189271931", maxMustermann, annamMusterfrau);
                 Package p2 = new Package(PackageType.OUTBOUND, Integer.toString(random.nextInt(999999999)), "SAP9999912313", annamMusterfrau, maxMustermann);
 
-                String[] inboundStatusOptions = {"CREATED", "IN_TRANSPORT"};
+                String[] inboundStatusOptions = {"CREATED"};
                 String[] outboundStatusOptions = {"CREATED"};
 
                 p1.setStatus(PackageStatus.valueOf(inboundStatusOptions[random.nextInt(inboundStatusOptions.length)]));

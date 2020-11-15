@@ -1,10 +1,8 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -27,11 +25,8 @@ public class Driver {
     private String company;
 
     // Last known GPS location
-    private Double latitude;
-    private Double longitude;
-    private Double accuracy;
-    @UpdateTimestamp
-    private LocalDateTime lastUpdatedTimestamp;
+    @Embedded
+    private Location location;
 
     public Driver() {
     }
@@ -87,36 +82,12 @@ public class Driver {
         this.company = company;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Double getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(Double accuracy) {
-        this.accuracy = accuracy;
-    }
-
-    public LocalDateTime getLastUpdatedTimestamp() {
-        return lastUpdatedTimestamp;
-    }
-
-    public void setLastUpdatedTimestamp(LocalDateTime lastUpdatedTimestamp) {
-        this.lastUpdatedTimestamp = lastUpdatedTimestamp;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Collection<Handover> getHandovers() {
@@ -144,10 +115,7 @@ public class Driver {
                 ", email='" + email + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", company='" + company + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", accuracy=" + accuracy +
-                ", lastUpdatedTimestamp=" + lastUpdatedTimestamp +
+                ", location=" + location +
                 '}';
     }
 }

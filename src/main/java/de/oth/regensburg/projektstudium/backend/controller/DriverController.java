@@ -1,7 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.controller;
 
-import de.oth.regensburg.projektstudium.backend.dto.Location;
 import de.oth.regensburg.projektstudium.backend.entity.Driver;
+import de.oth.regensburg.projektstudium.backend.entity.Location;
 import de.oth.regensburg.projektstudium.backend.exceptions.BadRequestException;
 import de.oth.regensburg.projektstudium.backend.service.DriverService;
 import org.apache.commons.lang3.StringUtils;

@@ -1,13 +1,14 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
-import de.oth.regensburg.projektstudium.backend.dto.Location;
 import de.oth.regensburg.projektstudium.backend.entity.Driver;
+import de.oth.regensburg.projektstudium.backend.entity.Location;
 import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;
 import de.oth.regensburg.projektstudium.backend.repository.DriverRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,8 +45,8 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public Driver updateLocation(Long driverId, Location location) {
         final Driver dbDriver = this.findOneById(driverId);
-        dbDriver.setLatitude(location.getLatitude());
-        dbDriver.setLongitude(location.getLongitude());
+        location.setLastUpdatedTimestamp(LocalDateTime.now());
+        dbDriver.setLocation(location);
         return repository.save(dbDriver);
     }
 }

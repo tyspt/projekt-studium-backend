@@ -1,9 +1,14 @@
-package de.oth.regensburg.projektstudium.backend.dto;
+package de.oth.regensburg.projektstudium.backend.entity;
 
+import javax.persistence.Embeddable;
+import java.time.LocalDateTime;
+
+@Embeddable
 public class Location {
     private Double latitude;
     private Double longitude;
     private Double accuracy;
+    private LocalDateTime lastUpdatedTimestamp;
 
     public Location() {
     }
@@ -35,6 +40,14 @@ public class Location {
     }
 
     public void setAccuracy(Double accuracy) {
-        this.accuracy = accuracy != null ? accuracy : 1000d;
+        this.accuracy = (accuracy != null) ? accuracy : 1000d;
+    }
+
+    public LocalDateTime getLastUpdatedTimestamp() {
+        return lastUpdatedTimestamp;
+    }
+
+    public void setLastUpdatedTimestamp(LocalDateTime lastUpdatedTimestamp) {
+        this.lastUpdatedTimestamp = lastUpdatedTimestamp;
     }
 }

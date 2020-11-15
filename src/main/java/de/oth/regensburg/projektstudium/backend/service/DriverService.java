@@ -1,7 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
-import de.oth.regensburg.projektstudium.backend.dto.Location;
 import de.oth.regensburg.projektstudium.backend.entity.Driver;
+import de.oth.regensburg.projektstudium.backend.entity.Location;
 
 import java.util.List;
 
