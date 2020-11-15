@@ -1,5 +1,6 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
+import de.oth.regensburg.projektstudium.backend.dto.Location;
 import de.oth.regensburg.projektstudium.backend.entity.Driver;
 import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;
 import de.oth.regensburg.projektstudium.backend.repository.DriverRepository;
@@ -38,5 +39,13 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public Driver updateDriver(Driver newDriver) {
         return repository.save(newDriver);
+    }
+
+    @Override
+    public Driver updateLocation(Long driverId, Location location){
+        final Driver dbDriver = this.findOneById(driverId);
+        dbDriver.setLatitude(location.getLatitude());
+        dbDriver.setLongitude(location.getLongitude());
+        return repository.save(dbDriver);
     }
 }
