@@ -7,7 +7,6 @@ import de.oth.regensburg.projektstudium.backend.entity.Person;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
 import de.oth.regensburg.projektstudium.backend.repository.*;
-import de.oth.regensburg.projektstudium.backend.utils.RandomEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 @Configuration
 public class Config extends WebMvcConfigurerAdapter {
@@ -56,11 +56,17 @@ public class Config extends WebMvcConfigurerAdapter {
             maxMustermann.setRepresentative(secretary);
             personRepository.save(maxMustermann);
 
-            for (int i = 0; i < 500; i++) {
-                Package p1 = new Package(PackageType.INBOUND, "12121212121212", "SAP189271931", maxMustermann, annamMusterfrau);
-                Package p2 = new Package(PackageType.OUTBOUND, "34343434343434", "SAP9999912313", annamMusterfrau, maxMustermann);
-                p1.setStatus(RandomEnum.randomEnum(PackageStatus.class));
-                p2.setStatus(RandomEnum.randomEnum(PackageStatus.class));
+            Random random = new Random();
+
+            for (int i = 0; i < 5; i++) {
+                Package p1 = new Package(PackageType.INBOUND, Integer.toString(random.nextInt(999999999)), "SAP189271931", maxMustermann, annamMusterfrau);
+                Package p2 = new Package(PackageType.OUTBOUND, Integer.toString(random.nextInt(999999999)), "SAP9999912313", annamMusterfrau, maxMustermann);
+
+                String[] inboundStatusOptions = {"CREATED", "IN_TRANSPORT"};
+                String[] outboundStatusOptions = {"CREATED"};
+
+                p1.setStatus(PackageStatus.valueOf(inboundStatusOptions[random.nextInt(inboundStatusOptions.length)]));
+                p2.setStatus(PackageStatus.valueOf(outboundStatusOptions[random.nextInt(outboundStatusOptions.length)]));
                 log.info("Preloading " + packageRepository.save(p1));
                 log.info("Preloading " + packageRepository.save(p2));
             }

@@ -42,7 +42,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Driver updateLocation(Long driverId, Location location){
+    public Driver updateLocation(Long driverId, Location location) {
         final Driver dbDriver = this.findOneById(driverId);
         dbDriver.setLatitude(location.getLatitude());
         dbDriver.setLongitude(location.getLongitude());
