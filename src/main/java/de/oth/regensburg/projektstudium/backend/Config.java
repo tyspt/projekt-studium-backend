@@ -4,8 +4,10 @@ import de.oth.regensburg.projektstudium.backend.entity.Building;
 import de.oth.regensburg.projektstudium.backend.entity.Driver;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
 import de.oth.regensburg.projektstudium.backend.entity.Person;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
 import de.oth.regensburg.projektstudium.backend.repository.*;
+import de.oth.regensburg.projektstudium.backend.utils.RandomEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -54,10 +56,14 @@ public class Config extends WebMvcConfigurerAdapter {
             maxMustermann.setRepresentative(secretary);
             personRepository.save(maxMustermann);
 
-            Package p1 = new Package(PackageType.INBOUND, "12121212121212", "SAP189271931", maxMustermann, annamMusterfrau);
-            Package p2 = new Package(PackageType.OUTBOUND, "34343434343434", "SAP9999912313", annamMusterfrau, maxMustermann);
-            log.info("Preloading " + packageRepository.save(p1));
-            log.info("Preloading " + packageRepository.save(p2));
+            for (int i = 0; i < 500; i++) {
+                Package p1 = new Package(PackageType.INBOUND, "12121212121212", "SAP189271931", maxMustermann, annamMusterfrau);
+                Package p2 = new Package(PackageType.OUTBOUND, "34343434343434", "SAP9999912313", annamMusterfrau, maxMustermann);
+                p1.setStatus(RandomEnum.randomEnum(PackageStatus.class));
+                p2.setStatus(RandomEnum.randomEnum(PackageStatus.class));
+                log.info("Preloading " + packageRepository.save(p1));
+                log.info("Preloading " + packageRepository.save(p2));
+            }
 
 //            Handover h1 = new Handover(UUID.randomUUID());
 //            h1.addPackage(p1);
