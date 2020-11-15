@@ -1,7 +1,6 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Package;
-import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 
 import java.util.List;
 
@@ -13,5 +12,5 @@ public interface PackageService {
 
     Package addPackage(Package newPackage);
 
-    Package updateStatus(String idOrBarcode, PackageStatus newStatus);
+    Package collectPackage(String idOrBarcode, Long driverId);
 }

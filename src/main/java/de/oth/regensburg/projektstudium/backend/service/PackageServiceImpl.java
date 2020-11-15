@@ -1,7 +1,10 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
+import de.oth.regensburg.projektstudium.backend.entity.Driver;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
+import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
+import de.oth.regensburg.projektstudium.backend.exceptions.ForbiddenException;
 import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;
 import de.oth.regensburg.projektstudium.backend.repository.PackageRepository;
 import org.slf4j.Logger;
@@ -17,9 +20,14 @@ public class PackageServiceImpl implements PackageService {
 
     private static final Logger log = LoggerFactory.getLogger(PackageServiceImpl.class);
     private final PackageRepository packageRepository;
+    private final DriverService driverService;
 
-    public PackageServiceImpl(PackageRepository packageRepository) {
+    public PackageServiceImpl(
+            PackageRepository packageRepository,
+            DriverService driverService
+    ) {
         this.packageRepository = packageRepository;
+        this.driverService = driverService;
     }
 
     @Override
@@ -47,16 +55,17 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public Package updateStatus(String idOrBarcode, PackageStatus newStatus) {
+    public Package collectPackage(String idOrBarcode, Long driverId) {
         final Package dbPackage = this.findOneByIdOrBarcode(idOrBarcode);
+        final Driver driver = this.driverService.findOneById(driverId);
 
-        switch (newStatus) {
-            case COLLECTED:
-            default:
-                break;
+        if (dbPackage.getType() != PackageType.OUTBOUND || dbPackage.getStatus() != PackageStatus.CREATED) {
+            throw new ForbiddenException("Package #" + idOrBarcode + " has wrong type or in wrong status: " + dbPackage.getStatus() + " (" + dbPackage.getType().toString().toLowerCase() +
+                    "), collect is only allow for outbound packages with CREATED status.");
         }
 
-        dbPackage.setStatus(newStatus);
+        dbPackage.setDriver(driver);
+        dbPackage.setStatus(PackageStatus.COLLECTED);
         return packageRepository.save(dbPackage);
     }
 }

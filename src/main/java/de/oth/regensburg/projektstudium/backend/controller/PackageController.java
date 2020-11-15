@@ -7,6 +7,7 @@ import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.exceptions.BadRequestException;
 import de.oth.regensburg.projektstudium.backend.service.PackageService;
 import de.oth.regensburg.projektstudium.backend.service.PersonService;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -56,20 +57,30 @@ public class PackageController {
         return new ResponseEntity<>(packageService.addPackage(newPackage), HttpStatus.CREATED);
     }
 
-    @PutMapping("")
-    Package updateStatus(@PathVariable("idOrBarcode") String idOrBarcode,
-                         @RequestBody ObjectNode statusJson) {
+    @PutMapping("/{idOrBarcode}")
+    Package updateStatus(
+            @RequestHeader("Driver-ID") String driverId,
+            @PathVariable("idOrBarcode") String idOrBarcode,
+            @RequestBody ObjectNode statusJson) {
         if (StringUtils.isEmpty(idOrBarcode) || statusJson == null || !statusJson.has("status")) {
             throw new BadRequestException();
         }
 
         final PackageStatus status;
         try {
-            status = PackageStatus.valueOf(statusJson.get("status").asText());
+            status = PackageStatus.valueOf(statusJson.get("status").asText().toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new BadRequestException("status value can not be recognized by server");
         }
 
-        return packageService.updateStatus(idOrBarcode, status);
+        switch (status) {
+            case COLLECTED:
+                if (!NumberUtils.isParsable(driverId)) {
+                    throw new BadRequestException("can't find valid driver id");
+                }
+                return packageService.collectPackage(idOrBarcode, Long.parseLong(driverId));
+        }
+
+        throw new RuntimeException("Not supported yet");
     }
 }
