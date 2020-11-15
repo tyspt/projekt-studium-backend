@@ -74,7 +74,7 @@ public class PackageController {
         }
 
         switch (status) {
-            case COLLECTED:
+            case IN_TRANSPORT:
                 if (!NumberUtils.isParsable(driverId)) {
                     throw new BadRequestException("can't find valid driver id");
                 }

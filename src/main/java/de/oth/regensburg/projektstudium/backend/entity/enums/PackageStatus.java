@@ -8,6 +8,5 @@ public enum PackageStatus {
     DELIVERED,
     NOT_DELIVERABLE,
 
-    COLLECTED,
     RECEIVED_BY_LC
 }

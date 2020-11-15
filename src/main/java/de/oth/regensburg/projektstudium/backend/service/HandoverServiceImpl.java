@@ -68,10 +68,10 @@ public class HandoverServiceImpl implements HandoverService {
         }
 
         final boolean isActionValid = (pkg.getType() == PackageType.INBOUND && pkg.getStatus() == PackageStatus.CREATED) ||
-                (pkg.getType() == PackageType.OUTBOUND && pkg.getStatus() == PackageStatus.COLLECTED);
+                (pkg.getType() == PackageType.OUTBOUND && pkg.getStatus() == PackageStatus.IN_TRANSPORT);
         if (!isActionValid) {
             throw new ForbiddenException("Package #" + pkgIdOrBarcode + " is in wrong status: " + pkg.getStatus() + " (" + pkg.getType().toString().toLowerCase() +
-                    "), handover is only allow for inbound packages with CREATED or outbound packages with COLLECTED status.");
+                    "), handover is only allow for inbound packages with CREATED or outbound packages with IN_TRANSPORT status.");
         }
 
         pkg.setStatus(PackageStatus.IN_HANDOVER);
@@ -107,7 +107,7 @@ public class HandoverServiceImpl implements HandoverService {
             pkg.setStatus(
                     pkg.getType() == PackageType.INBOUND ?
                             PackageStatus.CREATED :
-                            PackageStatus.COLLECTED);
+                            PackageStatus.IN_TRANSPORT);
             pkg.setHandover(null);
         }
 

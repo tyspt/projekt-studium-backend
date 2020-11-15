@@ -65,7 +65,7 @@ public class PackageServiceImpl implements PackageService {
         }
 
         dbPackage.setDriver(driver);
-        dbPackage.setStatus(PackageStatus.COLLECTED);
+        dbPackage.setStatus(PackageStatus.IN_TRANSPORT);
         return packageRepository.save(dbPackage);
     }
 }
