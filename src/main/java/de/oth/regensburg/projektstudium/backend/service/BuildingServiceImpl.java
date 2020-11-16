@@ -29,4 +29,21 @@ public class BuildingServiceImpl implements BuildingService {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Building.class));
     }
+
+    @Override
+    public Building addBuilding(Building newBuilding) {
+        return repository.save(newBuilding);
+    }
+
+    @Override
+    public Building updateBuilding(Building newBuilding) {
+        return repository.save(newBuilding);
+    }
+
+    @Override
+    public Building deleteBuilding(Long buildingId) {
+        final Building building = this.findOneById(buildingId);
+        repository.delete(building);
+        return building;
+    }
 }

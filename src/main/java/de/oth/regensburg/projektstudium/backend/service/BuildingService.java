@@ -8,4 +8,10 @@ public interface BuildingService {
     List<Building> findAll();
 
     Building findOneById(Long id);
+
+    Building addBuilding(Building newBuilding);
+
+    Building updateBuilding(Building newBuilding);
+
+    Building deleteBuilding(Long buildingId);
 }
