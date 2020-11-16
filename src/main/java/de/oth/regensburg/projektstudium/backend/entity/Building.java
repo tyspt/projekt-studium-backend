@@ -1,6 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -15,6 +16,7 @@ public class Building {
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @Column(unique = true)
     private String shortName;
     private String fullName;
     private String description;
@@ -28,6 +30,16 @@ public class Building {
         this.fullName = fullName;
         this.description = description;
         this.address = address;
+    }
+
+    public Building(JsonNode node) {
+        if (node != null) {
+            this.setId(node.get("id") != null ? node.get("id").asLong() : null);
+            this.setShortName(node.get("shortName") != null ? node.get("shortName").asText() : null);
+            this.setFullName(node.get("fullName") != null ? node.get("fullName").asText() : null);
+            this.setDescription(node.get("description") != null ? node.get("description").asText() : null);
+            this.setAddress(node.get("address") != null ? node.get("address").asText() : null);
+        }
     }
 
     public Long getId() {

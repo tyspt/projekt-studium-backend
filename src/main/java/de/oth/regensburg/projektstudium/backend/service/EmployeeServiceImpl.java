@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findById(Long id) {
+    public Employee findOneById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Employee.class));
     }
@@ -33,5 +33,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee addEmployee(Employee newEmployee) {
         return repository.save(newEmployee);
+    }
+
+    @Override
+    public Employee updateEmployee(Employee newEmployee) {
+        return repository.save(newEmployee);
+    }
+
+    @Override
+    public Employee deleteEmployee(Long employeeId) {
+        final Employee employee = this.findOneById(employeeId);
+        repository.delete(employee);
+        return employee;
     }
 }

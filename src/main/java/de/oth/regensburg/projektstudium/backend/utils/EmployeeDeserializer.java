@@ -4,27 +4,27 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import de.oth.regensburg.projektstudium.backend.entity.Package;
+import de.oth.regensburg.projektstudium.backend.entity.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class PackageDeserializer extends StdDeserializer<Package> {
+public class EmployeeDeserializer extends StdDeserializer<Employee> {
 
-    private static final Logger log = LoggerFactory.getLogger(PackageDeserializer.class);
+    private static final Logger log = LoggerFactory.getLogger(EmployeeDeserializer.class);
 
-    public PackageDeserializer() {
+    public EmployeeDeserializer() {
         this(null);
     }
 
-    public PackageDeserializer(Class<?> vc) {
+    public EmployeeDeserializer(Class<?> vc) {
         super(vc);
     }
 
     @Override
-    public Package deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public Employee deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonNode pNode = jp.getCodec().readTree(jp);
-        return new Package(pNode);
+        return new Employee(pNode);
     }
 }

@@ -1,6 +1,9 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.oth.regensburg.projektstudium.backend.utils.EmployeeDeserializer;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -8,6 +11,7 @@ import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
+@JsonDeserialize(using = EmployeeDeserializer.class)
 public class Employee {
     @OneToMany(mappedBy = "recipient")
     @JsonIgnore
@@ -39,6 +43,26 @@ public class Employee {
         this.telephone = telephone;
         setBuilding(building);
         this.fullAddress = fullAddress;
+    }
+
+    public Employee(JsonNode node) {
+        if (node != null) {
+            this.setId(node.get("id") != null ? node.get("id").asLong() : null);
+            this.setName(node.get("name") != null ? node.get("name").textValue() : null);
+            this.setEmail(node.get("email") != null ? node.get("email").asText() : null);
+            this.setTelephone(node.get("telephone") != null ? node.get("telephone").asText() : null);
+            this.setFullAddress(node.get("fullAddress") != null ? node.get("fullAddress").asText() : null);
+
+            JsonNode bNode = node.get("building");
+            if (bNode != null) {
+                this.setBuilding(new Building(bNode));
+            }
+
+            JsonNode rNode = node.get("representative");
+            if (rNode != null) {
+                this.setRepresentative(new Employee(rNode));
+            }
+        }
     }
 
     public Long getId() {
@@ -106,12 +130,7 @@ public class Employee {
     }
 
     public void setRepresentative(Employee representative) {
-        if (representative == null) {
-            this.representative.getRepresentativeOf().remove(this);
-            this.representative = null;
-        }
         this.representative = representative;
-        this.representative.getRepresentativeOf().add(this);
     }
 
     public Collection<Employee> getRepresentativeOf() {

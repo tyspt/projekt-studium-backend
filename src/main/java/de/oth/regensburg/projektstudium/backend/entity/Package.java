@@ -1,6 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
@@ -68,6 +69,26 @@ public class Package {
         this.orderNumber = orderNumber;
         setRecipient(recipient);
         setSender(sender);
+    }
+
+    public Package(JsonNode node) {
+        if (node != null) {
+            this.setId(node.get("id") != null ? node.get("id").asLong() : null);
+            this.setBarcode(node.get("barcode") != null ? node.get("barcode").textValue() : null);
+            this.setOrderNumber(node.get("orderNumber") != null ? node.get("orderNumber").textValue() : null);
+            this.setType(node.get("type") != null ? PackageType.valueOf(node.get("type").asText()) : null);
+            this.setStatus(node.get("status") != null ? PackageStatus.valueOf(node.get("status").asText()) : null);
+
+            JsonNode rcpNode = node.get("recipient");
+            if (rcpNode != null) {
+                this.setRecipient(new Employee(rcpNode));
+            }
+
+            JsonNode sndNode = node.get("sender");
+            if (sndNode != null) {
+                this.setSender(new Employee(sndNode));
+            }
+        }
     }
 
     public Long getId() {
