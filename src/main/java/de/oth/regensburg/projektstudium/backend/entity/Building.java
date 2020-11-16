@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Building {
     @OneToMany(mappedBy = "building")
     @JsonIgnore
-    private final Collection<Person> people = new HashSet<>();
+    private final Collection<Employee> employees = new HashSet<>();
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -70,8 +70,8 @@ public class Building {
         this.address = address;
     }
 
-    public Collection<Person> getPeople() {
-        return people;
+    public Collection<Employee> getEmployees() {
+        return employees;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Building {
                 Objects.equals(fullName, building.fullName) &&
                 Objects.equals(description, building.description) &&
                 Objects.equals(address, building.address) &&
-                Objects.equals(people, building.people);
+                Objects.equals(employees, building.employees);
     }
 
     @Override

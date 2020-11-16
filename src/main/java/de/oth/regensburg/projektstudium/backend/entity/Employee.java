@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
-public class Person {
+public class Employee {
     @OneToMany(mappedBy = "recipient")
     @JsonIgnore
     private final Collection<Package> inboundPackages = new HashSet<>();
@@ -17,7 +17,7 @@ public class Person {
     private final Collection<Package> outboundPackages = new HashSet<>();
     @OneToMany(mappedBy = "representative")
     @JsonIgnore
-    private final Collection<Person> representativeOf = new HashSet<>();
+    private final Collection<Employee> representativeOf = new HashSet<>();
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -28,12 +28,12 @@ public class Person {
     private Building building;
     private String fullAddress;
     @ManyToOne
-    private Person representative;
+    private Employee representative;
 
-    public Person() {
+    public Employee() {
     }
 
-    public Person(String name, String email, String telephone, Building building, String fullAddress) {
+    public Employee(String name, String email, String telephone, Building building, String fullAddress) {
         this.name = name;
         this.email = email;
         this.telephone = telephone;
@@ -79,10 +79,10 @@ public class Person {
 
     public void setBuilding(Building building) {
         if (this.building != null) {
-            this.building.getPeople().remove(this);
+            this.building.getEmployees().remove(this);
         }
         this.building = building;
-        building.getPeople().add(this);
+        building.getEmployees().add(this);
     }
 
     public String getFullAddress() {
@@ -101,11 +101,11 @@ public class Person {
         return inboundPackages;
     }
 
-    public Person getRepresentative() {
+    public Employee getRepresentative() {
         return representative;
     }
 
-    public void setRepresentative(Person representative) {
+    public void setRepresentative(Employee representative) {
         if (representative == null) {
             this.representative.getRepresentativeOf().remove(this);
             this.representative = null;
@@ -114,7 +114,7 @@ public class Person {
         this.representative.getRepresentativeOf().add(this);
     }
 
-    public Collection<Person> getRepresentativeOf() {
+    public Collection<Employee> getRepresentativeOf() {
         return representativeOf;
     }
 
@@ -122,13 +122,13 @@ public class Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return id.equals(person.id) &&
-                name.equals(person.name) &&
-                Objects.equals(email, person.email) &&
-                Objects.equals(telephone, person.telephone) &&
-                Objects.equals(building, person.building) &&
-                Objects.equals(fullAddress, person.fullAddress);
+        Employee employee = (Employee) o;
+        return id.equals(employee.id) &&
+                name.equals(employee.name) &&
+                Objects.equals(email, employee.email) &&
+                Objects.equals(telephone, employee.telephone) &&
+                Objects.equals(building, employee.building) &&
+                Objects.equals(fullAddress, employee.fullAddress);
     }
 
     @Override
@@ -138,13 +138,14 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", building=" + building +
                 ", fullAddress='" + fullAddress + '\'' +
+                ", representative='" + representative + '\'' +
                 '}';
     }
 }

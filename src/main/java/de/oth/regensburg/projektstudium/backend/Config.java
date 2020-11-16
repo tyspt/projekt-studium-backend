@@ -2,8 +2,8 @@ package de.oth.regensburg.projektstudium.backend;
 
 import de.oth.regensburg.projektstudium.backend.entity.Building;
 import de.oth.regensburg.projektstudium.backend.entity.Driver;
+import de.oth.regensburg.projektstudium.backend.entity.Employee;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
-import de.oth.regensburg.projektstudium.backend.entity.Person;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
 import de.oth.regensburg.projektstudium.backend.repository.*;
@@ -35,7 +35,7 @@ public class Config extends WebMvcConfigurerAdapter {
     @Bean
     CommandLineRunner initDatabase(
             BuildingRepository buildingRepository,
-            PersonRepository personRepository,
+            EmployeeRepository employeeRepository,
             PackageRepository packageRepository,
             HandoverRepository handoverRepository,
             DriverRepository driverRepository
@@ -46,15 +46,15 @@ public class Config extends WebMvcConfigurerAdapter {
             log.info("Preloading " + buildingRepository.save(f36));
             log.info("Preloading " + buildingRepository.save(d47));
 
-            Person secretary = new Person("Lisa Sekretärin", "lisa.sekretaerin@demo.de", "333333", f36, "Demostraße 42, F36/2/8, Regensburg");
-            Person maxMustermann = new Person("Max Mustermann", "max.mustermann@demo.de", "11111111", f36, "Demostraße 42, F36/2/8, Regensburg");
-            Person annamMusterfrau = new Person("Anna Musterfrau", "anna.musterfrau@demo.de", "22222222", d47, "Spaßstraße 39a, D47/6/3, Regensburg");
-            log.info("Preloading " + personRepository.save(secretary));
-            log.info("Preloading " + personRepository.save(maxMustermann));
-            log.info("Preloading " + personRepository.save(annamMusterfrau));
+            Employee secretary = new Employee("Lisa Sekretärin", "lisa.sekretaerin@demo.de", "333333", f36, "Demostraße 42, F36/2/8, Regensburg");
+            Employee maxMustermann = new Employee("Max Mustermann", "max.mustermann@demo.de", "11111111", f36, "Demostraße 42, F36/2/8, Regensburg");
+            Employee annamMusterfrau = new Employee("Anna Musterfrau", "anna.musterfrau@demo.de", "22222222", d47, "Spaßstraße 39a, D47/6/3, Regensburg");
+            log.info("Preloading " + employeeRepository.save(secretary));
+            log.info("Preloading " + employeeRepository.save(maxMustermann));
+            log.info("Preloading " + employeeRepository.save(annamMusterfrau));
 
             maxMustermann.setRepresentative(secretary);
-            personRepository.save(maxMustermann);
+            employeeRepository.save(maxMustermann);
 
             Random random = new Random();
 

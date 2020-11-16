@@ -17,13 +17,13 @@ import java.util.Objects;
 @NamedEntityGraph(
         name = "package-graph",
         attributeNodes = {
-                @NamedAttributeNode(value = "recipient", subgraph = "person-subgraph"),
-                @NamedAttributeNode(value = "sender", subgraph = "person-subgraph"),
+                @NamedAttributeNode(value = "recipient", subgraph = "employee-subgraph"),
+                @NamedAttributeNode(value = "sender", subgraph = "employee-subgraph"),
                 @NamedAttributeNode("driver"),
         },
         subgraphs = {
                 @NamedSubgraph(
-                        name = "person-subgraph",
+                        name = "employee-subgraph",
                         attributeNodes = {
                                 @NamedAttributeNode("building"),
                                 @NamedAttributeNode(value = "representative")
@@ -42,9 +42,9 @@ public class Package {
     private String orderNumber; // Order number in SAP
 
     @ManyToOne
-    private Person recipient;
+    private Employee recipient;
     @ManyToOne
-    private Person sender;
+    private Employee sender;
 
     @CreationTimestamp
     private LocalDateTime createdTimestamp;
@@ -62,7 +62,7 @@ public class Package {
     public Package() {
     }
 
-    public Package(PackageType type, String barcode, String orderNumber, Person recipient, Person sender) {
+    public Package(PackageType type, String barcode, String orderNumber, Employee recipient, Employee sender) {
         this.type = type;
         this.barcode = barcode;
         this.orderNumber = orderNumber;
@@ -102,11 +102,11 @@ public class Package {
         this.orderNumber = orderNumber;
     }
 
-    public Person getRecipient() {
+    public Employee getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(Person recipient) {
+    public void setRecipient(Employee recipient) {
         if (this.recipient != null) {
             this.recipient.getInboundPackages().remove(this);
         }
@@ -114,11 +114,11 @@ public class Package {
         recipient.getInboundPackages().add(this);
     }
 
-    public Person getSender() {
+    public Employee getSender() {
         return sender;
     }
 
-    public void setSender(Person sender) {
+    public void setSender(Employee sender) {
         if (this.sender != null) {
             this.sender.getOutboundPackages().remove(this);
         }
