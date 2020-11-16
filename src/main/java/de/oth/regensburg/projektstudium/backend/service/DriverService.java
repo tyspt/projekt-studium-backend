@@ -15,4 +15,6 @@ public interface DriverService {
     Driver updateDriver(Driver newDriver);
 
     Driver updateLocation(Long driverId, Location location);
+
+    Driver deleteDriver(Long driverId);
 }

@@ -33,6 +33,22 @@ public class DriverController {
         return driverService.findOneById(id);
     }
 
+    @PostMapping("")
+    Driver addDriver(@RequestBody Driver driver) {
+        return driverService.addDriver(driver);
+    }
+
+    @PutMapping("/{id}")
+    Driver updateDriver(@PathVariable("id") Long id, @RequestBody Driver driver) {
+        driver.setId(id);
+        return driverService.updateDriver(driver);
+    }
+
+    @DeleteMapping("/{id}")
+    Driver deleteDriver(@PathVariable("id") Long id) {
+        return driverService.deleteDriver(id);
+    }
+
     @PutMapping("/location")
     Driver updateLocation(@RequestHeader("Driver-ID") String driverId,
                           @RequestBody Location location) {

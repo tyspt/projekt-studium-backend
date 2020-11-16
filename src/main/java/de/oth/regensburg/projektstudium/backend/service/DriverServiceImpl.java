@@ -49,4 +49,11 @@ public class DriverServiceImpl implements DriverService {
         dbDriver.setLocation(location);
         return repository.save(dbDriver);
     }
+
+    @Override
+    public Driver deleteDriver(Long driverId) {
+        final Driver driver = this.findOneById(driverId);
+        repository.delete(driver);
+        return driver;
+    }
 }
