@@ -13,4 +13,10 @@ public interface PackageService {
     Package addPackage(Package newPackage);
 
     Package collectPackage(String idOrBarcode, Long driverId);
+
+    Package deliverPackage(String idOrBarcode);
+
+    Package rescheduleDelivery(String idOrBarcode);
+
+    Package markNotDeliverable(String idOrBarcode);
 }

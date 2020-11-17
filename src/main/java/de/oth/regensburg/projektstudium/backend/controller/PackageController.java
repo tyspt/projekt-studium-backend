@@ -79,6 +79,12 @@ public class PackageController {
                     throw new BadRequestException("can't find valid driver id");
                 }
                 return packageService.collectPackage(idOrBarcode, Long.parseLong(driverId));
+            case REATTEMPT_DELIVERY:
+                return packageService.rescheduleDelivery(idOrBarcode);
+            case NOT_DELIVERABLE:
+                return packageService.markNotDeliverable(idOrBarcode);
+            case DELIVERED:
+                return packageService.deliverPackage(idOrBarcode);
         }
 
         throw new RuntimeException("Not supported yet");

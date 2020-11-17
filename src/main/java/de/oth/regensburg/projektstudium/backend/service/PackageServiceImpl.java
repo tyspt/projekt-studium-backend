@@ -7,6 +7,7 @@ import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
 import de.oth.regensburg.projektstudium.backend.exceptions.ForbiddenException;
 import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;
 import de.oth.regensburg.projektstudium.backend.repository.PackageRepository;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
@@ -37,11 +38,15 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public Package findOneByIdOrBarcode(String idOrBarcode) {
-        Long id = Long.valueOf(idOrBarcode);
-        Optional<Package> resById = packageRepository.findById(id);
+        Optional<Package> resById = Optional.empty();
+        if (NumberUtils.isParsable(idOrBarcode)) {
+            Long id = Long.valueOf(idOrBarcode);
+            resById = packageRepository.findById(id);
+        }
 
         Package pkg = new Package();
         pkg.setBarcode(idOrBarcode);
+        pkg.setStatus(null);
         Optional<Package> resByBarcode = packageRepository.findOne(Example.of(pkg));
 
         return resById
@@ -66,6 +71,27 @@ public class PackageServiceImpl implements PackageService {
 
         dbPackage.setDriver(driver);
         dbPackage.setStatus(PackageStatus.IN_TRANSPORT);
+        return packageRepository.save(dbPackage);
+    }
+
+    @Override
+    public Package deliverPackage(String idOrBarcode) {
+        final Package dbPackage = this.findOneByIdOrBarcode(idOrBarcode);
+        dbPackage.setStatus(PackageStatus.DELIVERED);
+        return packageRepository.save(dbPackage);
+    }
+
+    @Override
+    public Package rescheduleDelivery(String idOrBarcode) {
+        final Package dbPackage = this.findOneByIdOrBarcode(idOrBarcode);
+        dbPackage.setStatus(PackageStatus.REATTEMPT_DELIVERY);
+        return packageRepository.save(dbPackage);
+    }
+
+    @Override
+    public Package markNotDeliverable(String idOrBarcode) {
+        final Package dbPackage = this.findOneByIdOrBarcode(idOrBarcode);
+        dbPackage.setStatus(PackageStatus.NOT_DELIVERABLE);
         return packageRepository.save(dbPackage);
     }
 }
