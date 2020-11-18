@@ -3,7 +3,6 @@ package de.oth.regensburg.projektstudium.backend.controller;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.oth.regensburg.projektstudium.backend.entity.Handover;
 import de.oth.regensburg.projektstudium.backend.exceptions.BadRequestException;
-import de.oth.regensburg.projektstudium.backend.service.DriverService;
 import de.oth.regensburg.projektstudium.backend.service.HandoverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +19,9 @@ import java.util.UUID;
 public class HandoverController {
     private static final Logger log = LoggerFactory.getLogger(HandoverController.class);
     private final HandoverService handoverService;
-    private final DriverService driverService;
 
-    public HandoverController(HandoverService handoverService, DriverService driverService) {
+    public HandoverController(HandoverService handoverService) {
         this.handoverService = handoverService;
-        this.driverService = driverService;
     }
 
     @GetMapping("")
