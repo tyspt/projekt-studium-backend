@@ -10,7 +10,7 @@ public interface DriverService {
 
     Driver findOneById(Long id);
 
-    Driver addDriver(Driver newDriver);
+    Driver createDriver(Driver newDriver);
 
     Driver updateDriver(Driver newDriver);
 

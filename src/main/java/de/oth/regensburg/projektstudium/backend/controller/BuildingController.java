@@ -31,7 +31,7 @@ public class BuildingController {
 
     @PostMapping("")
     Building addBuilding(@RequestBody Building building) {
-        return buildingService.addBuilding(building);
+        return buildingService.createBuilding(building);
     }
 
     @PutMapping("/{id}")

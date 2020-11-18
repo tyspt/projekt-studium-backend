@@ -33,7 +33,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Driver addDriver(Driver newDriver) {
+    public Driver createDriver(Driver newDriver) {
         return repository.save(newDriver);
     }
 

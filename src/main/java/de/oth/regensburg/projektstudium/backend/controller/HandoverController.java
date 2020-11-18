@@ -53,7 +53,7 @@ public class HandoverController {
             throw new BadRequestException();
         }
 
-        return new ResponseEntity<>(handoverService.addHandover(uHandoverUuid, lDriverId),
+        return new ResponseEntity<>(handoverService.createHandover(uHandoverUuid, lDriverId),
                 HttpStatus.CREATED);
     }
 

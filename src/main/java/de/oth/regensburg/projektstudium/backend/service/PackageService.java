@@ -10,7 +10,7 @@ public interface PackageService {
 
     Package findOneByIdOrBarcode(String idOrBarcode);
 
-    Package addPackage(Package newPackage);
+    Package createPackage(Package newPackage);
 
     Package collectPackage(String idOrBarcode, Long driverId);
 

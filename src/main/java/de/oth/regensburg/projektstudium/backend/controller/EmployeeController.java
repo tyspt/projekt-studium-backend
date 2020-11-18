@@ -26,7 +26,7 @@ public class EmployeeController {
 
     @PostMapping("")
     Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+        return employeeService.createEmployee(employee);
     }
 
     @PutMapping("/{id}")

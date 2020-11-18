@@ -49,7 +49,7 @@ public class HandoverServiceImpl implements HandoverService {
     }
 
     @Override
-    public Handover addHandover(UUID handoverUuid, Long driverId) {
+    public Handover createHandover(UUID handoverUuid, Long driverId) {
         final Driver driver = driverService.findOneById(driverId);
         Handover handover = new Handover();
         handover.setUuid(handoverUuid);

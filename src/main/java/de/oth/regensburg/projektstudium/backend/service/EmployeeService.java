@@ -9,7 +9,7 @@ public interface EmployeeService {
 
     Employee findOneById(Long id);
 
-    Employee addEmployee(Employee newEmployee);
+    Employee createEmployee(Employee newEmployee);
 
     Employee updateEmployee(Employee newEmployee);
 

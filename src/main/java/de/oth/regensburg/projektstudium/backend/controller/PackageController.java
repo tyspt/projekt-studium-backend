@@ -44,17 +44,17 @@ public class PackageController {
     ResponseEntity<Package> add(@RequestBody Package newPackage) {
         Employee recipient = newPackage.getRecipient();
         if (recipient.getId() == null) {
-            recipient = employeeService.addEmployee(recipient);
+            recipient = employeeService.createEmployee(recipient);
             newPackage.setRecipient(recipient);
         }
 
         Employee sender = newPackage.getSender();
         if (sender.getId() == null) {
-            sender = employeeService.addEmployee(sender);
+            sender = employeeService.createEmployee(sender);
             newPackage.setSender(sender);
         }
 
-        return new ResponseEntity<>(packageService.addPackage(newPackage), HttpStatus.CREATED);
+        return new ResponseEntity<>(packageService.createPackage(newPackage), HttpStatus.CREATED);
     }
 
     @PutMapping("/{idOrBarcode}")

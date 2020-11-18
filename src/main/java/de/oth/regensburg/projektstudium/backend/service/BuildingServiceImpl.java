@@ -31,7 +31,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public Building addBuilding(Building newBuilding) {
+    public Building createBuilding(Building newBuilding) {
         return repository.save(newBuilding);
     }
 

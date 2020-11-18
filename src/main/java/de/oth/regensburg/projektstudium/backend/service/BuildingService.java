@@ -9,7 +9,7 @@ public interface BuildingService {
 
     Building findOneById(Long id);
 
-    Building addBuilding(Building newBuilding);
+    Building createBuilding(Building newBuilding);
 
     Building updateBuilding(Building newBuilding);
 

@@ -35,7 +35,7 @@ public class DriverController {
 
     @PostMapping("")
     Driver addDriver(@RequestBody Driver driver) {
-        return driverService.addDriver(driver);
+        return driverService.createDriver(driver);
     }
 
     @PutMapping("/{id}")
