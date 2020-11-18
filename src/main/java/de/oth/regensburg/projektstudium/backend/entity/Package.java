@@ -11,6 +11,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -33,6 +36,9 @@ import java.util.Objects;
         }
 )
 public class Package {
+    @OneToMany(mappedBy = "relatedPackage")
+    @OrderBy("timestamp DESC")
+    private final List<ShipmentCourse> shipmentCourses = new ArrayList<>();
     private @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "package_generator")
     @SequenceGenerator(name = "package_generator", sequenceName = "package_seq", initialValue = 10001, allocationSize = 10)
@@ -41,19 +47,16 @@ public class Package {
     private PackageType type;
     private String barcode; // Barcode from external providers (e.g. DHL, DPD, etc.)
     private String orderNumber; // Order number in SAP
-
     @ManyToOne
     private Employee recipient;
     @ManyToOne
     private Employee sender;
-
     @CreationTimestamp
     private LocalDateTime createdTimestamp;
     @UpdateTimestamp
     private LocalDateTime lastUpdatedTimestamp;
     @Enumerated(EnumType.STRING)
     private PackageStatus status = PackageStatus.CREATED;
-
     @ManyToOne
     @JsonIgnore
     private Handover handover;
@@ -189,6 +192,15 @@ public class Package {
         }
         driver.getAssignedPackages().add(this);
         this.driver = driver;
+    }
+
+    public List<ShipmentCourse> getShipmentCourses() {
+        return Collections.unmodifiableList(shipmentCourses);
+    }
+
+    public void addShipmentCourse(ShipmentCourse shipmentCourse) {
+        shipmentCourse.setRelatedPackage(this);
+        shipmentCourses.add(shipmentCourse);
     }
 
     @Override

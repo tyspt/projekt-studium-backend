@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class DriverServiceImpl implements DriverService {
 
-    private static final Logger log = LoggerFactory.getLogger(DriverServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(DriverService.class);
     private final DriverRepository repository;
 
     public DriverServiceImpl(DriverRepository repository) {

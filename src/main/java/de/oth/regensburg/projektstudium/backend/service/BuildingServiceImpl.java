@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class BuildingServiceImpl implements BuildingService {
 
-    private static final Logger log = LoggerFactory.getLogger(BuildingServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(BuildingService.class);
     private final BuildingRepository repository;
 
     public BuildingServiceImpl(BuildingRepository repository) {

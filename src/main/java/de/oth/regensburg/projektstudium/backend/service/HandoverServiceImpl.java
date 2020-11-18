@@ -22,19 +22,22 @@ import java.util.UUID;
 @Service
 public class HandoverServiceImpl implements HandoverService {
 
-    private static final Logger log = LoggerFactory.getLogger(HandoverServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(HandoverService.class);
     private final HandoverRepository handoverRepository;
     private final PackageService packageService;
     private final DriverService driverService;
+    private final ShipmentCourseService shipmentCourseService;
 
     public HandoverServiceImpl(
             HandoverRepository handoverRepository,
             PackageService packageService,
-            DriverService driverService
+            DriverService driverService,
+            ShipmentCourseService shipmentCourseService
     ) {
         this.handoverRepository = handoverRepository;
         this.packageService = packageService;
         this.driverService = driverService;
+        this.shipmentCourseService = shipmentCourseService;
     }
 
     @Override
@@ -92,6 +95,8 @@ public class HandoverServiceImpl implements HandoverService {
                             PackageStatus.IN_TRANSPORT :
                             PackageStatus.RECEIVED_BY_LC);
             pkg.setDriver(driver);
+            pkg.addShipmentCourse(shipmentCourseService.createShipmentCourse(
+                    "Package is handed over to driver " + driver.getName() + " of " + driver.getCompany() + " for delivery."));
         }
         handover.setStatus(HandoverStatus.COMPLETED);
         return handoverRepository.save(handover);

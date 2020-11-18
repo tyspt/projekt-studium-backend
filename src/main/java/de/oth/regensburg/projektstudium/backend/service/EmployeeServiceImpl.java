@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
     private final EmployeeRepository repository;
 
     public EmployeeServiceImpl(EmployeeRepository repository) {
