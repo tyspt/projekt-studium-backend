@@ -1,4 +1,4 @@
-package de.oth.regensburg.projektstudium.backend.utils;
+package de.oth.regensburg.projektstudium.backend.entity.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

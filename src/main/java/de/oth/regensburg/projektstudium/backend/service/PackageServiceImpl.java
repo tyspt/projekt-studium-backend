@@ -2,20 +2,20 @@ package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Driver;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
+import de.oth.regensburg.projektstudium.backend.entity.Signature;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
 import de.oth.regensburg.projektstudium.backend.exceptions.ForbiddenException;
 import de.oth.regensburg.projektstudium.backend.exceptions.NotFoundException;
 import de.oth.regensburg.projektstudium.backend.repository.PackageRepository;
+import de.oth.regensburg.projektstudium.backend.repository.SignatureRepository;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PackageServiceImpl implements PackageService {
@@ -24,13 +24,16 @@ public class PackageServiceImpl implements PackageService {
     private final PackageRepository packageRepository;
     private final ShipmentCourseService shipmentCourseService;
     private final DriverService driverService;
+    private final SignatureRepository signatureRepository;
 
     public PackageServiceImpl(
             PackageRepository packageRepository,
+            SignatureRepository signatureRepository,
             ShipmentCourseService shipmentCourseService,
             DriverService driverService
     ) {
         this.packageRepository = packageRepository;
+        this.signatureRepository = signatureRepository;
         this.shipmentCourseService = shipmentCourseService;
         this.driverService = driverService;
     }
@@ -42,20 +45,9 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public Package findOneByIdOrBarcode(String idOrBarcode) {
-        Optional<Package> resById = Optional.empty();
-        if (NumberUtils.isParsable(idOrBarcode)) {
-            Long id = Long.valueOf(idOrBarcode);
-            resById = packageRepository.findById(id);
-        }
-
-        Package pkg = new Package();
-        pkg.setBarcode(idOrBarcode);
-        pkg.setStatus(null);
-        Optional<Package> resByBarcode = packageRepository.findOne(Example.of(pkg));
-
-        return resById
-                .orElseGet(() -> resByBarcode
-                        .orElseThrow(() -> new NotFoundException(Package.class)));
+        final Long longId = NumberUtils.isParsable(idOrBarcode) ? Long.valueOf(idOrBarcode) : null;
+        return packageRepository.findOneByIdOrBarcode(longId, idOrBarcode)
+                .orElseThrow(() -> new NotFoundException(Package.class));
     }
 
     @Override
@@ -85,8 +77,10 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     @Transactional
-    public Package deliverPackage(String idOrBarcode) {
+    public Package deliverPackage(String idOrBarcode, String signatureData) {
         final Package dbPackage = this.findOneByIdOrBarcode(idOrBarcode);
+        signatureRepository.save(new Signature(dbPackage, signatureData));
+
         dbPackage.setStatus(PackageStatus.DELIVERED);
         dbPackage.addShipmentCourse(shipmentCourseService.createShipmentCourse("Package is delivered."));
         return packageRepository.save(dbPackage);
@@ -108,5 +102,12 @@ public class PackageServiceImpl implements PackageService {
         dbPackage.setStatus(PackageStatus.NOT_DELIVERABLE);
         dbPackage.addShipmentCourse(shipmentCourseService.createShipmentCourse("Package is marked as not deliverable."));
         return packageRepository.save(dbPackage);
+    }
+
+    @Override
+    public Signature findSignatureByPackageId(String idOrBarcode) {
+        final Package pkg = this.findOneByIdOrBarcode(idOrBarcode);
+        return signatureRepository.findById(pkg.getId())
+                .orElseThrow(() -> new NotFoundException(Signature.class));
     }
 }

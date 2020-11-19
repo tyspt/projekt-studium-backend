@@ -3,6 +3,8 @@ package de.oth.regensburg.projektstudium.backend.controller;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.oth.regensburg.projektstudium.backend.entity.Employee;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
+import de.oth.regensburg.projektstudium.backend.entity.ShipmentCourse;
+import de.oth.regensburg.projektstudium.backend.entity.Signature;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.exceptions.BadRequestException;
 import de.oth.regensburg.projektstudium.backend.service.EmployeeService;
@@ -38,6 +40,17 @@ public class PackageController {
     @GetMapping("/{idOrBarcode}")
     Package findOneByIdOrBarcode(@PathVariable("idOrBarcode") String idOrBarcode) {
         return packageService.findOneByIdOrBarcode(idOrBarcode);
+    }
+
+    @GetMapping("/{idOrBarcode}/shipmentCourses")
+    List<ShipmentCourse> findAllShipmentCoursesByPackageId(@PathVariable("idOrBarcode") String idOrBarcode) {
+        return packageService.findOneByIdOrBarcode(idOrBarcode).getShipmentCourses();
+    }
+
+    @GetMapping("/{idOrBarcode}/signature")
+    Signature findSignatureByPackageId(@PathVariable("idOrBarcode") String idOrBarcode) {
+        //TODO: IMPORTANT - Protect the signature API and grant access to administrators only before using in production!!!
+        return packageService.findSignatureByPackageId(idOrBarcode);
     }
 
     @PostMapping("")
@@ -84,7 +97,11 @@ public class PackageController {
             case NOT_DELIVERABLE:
                 return packageService.markNotDeliverable(idOrBarcode);
             case DELIVERED:
-                return packageService.deliverPackage(idOrBarcode);
+                if (!statusJson.has("signature")) {
+                    throw new BadRequestException("Request body must contain signature data if target status is DELIVERED");
+                }
+                final String signature = statusJson.get("signature").asText();
+                return packageService.deliverPackage(idOrBarcode, signature);
         }
 
         throw new RuntimeException("Not supported yet");

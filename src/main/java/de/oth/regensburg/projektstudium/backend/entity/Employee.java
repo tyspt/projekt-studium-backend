@@ -3,7 +3,7 @@ package de.oth.regensburg.projektstudium.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import de.oth.regensburg.projektstudium.backend.utils.EmployeeDeserializer;
+import de.oth.regensburg.projektstudium.backend.entity.deserializers.EmployeeDeserializer;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -19,9 +19,11 @@ public class Employee {
     @OneToMany(mappedBy = "sender")
     @JsonIgnore
     private final Collection<Package> outboundPackages = new HashSet<>();
+
     @OneToMany(mappedBy = "representative")
     @JsonIgnore
     private final Collection<Employee> representativeOf = new HashSet<>();
+
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

@@ -3,9 +3,9 @@ package de.oth.regensburg.projektstudium.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.oth.regensburg.projektstudium.backend.entity.deserializers.PackageDeserializer;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
-import de.oth.regensburg.projektstudium.backend.utils.PackageDeserializer;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -30,33 +30,39 @@ import java.util.Objects;
                         name = "employee-subgraph",
                         attributeNodes = {
                                 @NamedAttributeNode("building"),
-                                @NamedAttributeNode(value = "representative")
+                                @NamedAttributeNode(value = "representative", subgraph = "representative-subgraph")
                         }
-                )
+                ),
         }
 )
 public class Package {
     @OneToMany(mappedBy = "relatedPackage")
     @OrderBy("timestamp DESC")
+    @JsonIgnore
     private final List<ShipmentCourse> shipmentCourses = new ArrayList<>();
+
     private @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "package_generator")
     @SequenceGenerator(name = "package_generator", sequenceName = "package_seq", initialValue = 10001, allocationSize = 10)
     Long id; // ID used for internal tracking which is also printed as a QR code on the package
+
     @Enumerated(EnumType.STRING)
     private PackageType type;
     private String barcode; // Barcode from external providers (e.g. DHL, DPD, etc.)
     private String orderNumber; // Order number in SAP
-    @ManyToOne
-    private Employee recipient;
-    @ManyToOne
-    private Employee sender;
+
     @CreationTimestamp
     private LocalDateTime createdTimestamp;
     @UpdateTimestamp
     private LocalDateTime lastUpdatedTimestamp;
     @Enumerated(EnumType.STRING)
     private PackageStatus status = PackageStatus.CREATED;
+
+    @ManyToOne
+    private Employee recipient;
+    @ManyToOne
+    private Employee sender;
+
     @ManyToOne
     @JsonIgnore
     private Handover handover;

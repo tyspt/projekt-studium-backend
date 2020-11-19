@@ -2,6 +2,8 @@ package de.oth.regensburg.projektstudium.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.oth.regensburg.projektstudium.backend.entity.deserializers.BuildingDeserializer;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -9,6 +11,7 @@ import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
+@JsonDeserialize(using = BuildingDeserializer.class)
 public class Building {
     @OneToMany(mappedBy = "building")
     @JsonIgnore
