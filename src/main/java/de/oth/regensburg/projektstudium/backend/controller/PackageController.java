@@ -48,9 +48,9 @@ public class PackageController {
     }
 
     @GetMapping("/{idOrBarcode}/signature")
-    Signature findSignatureByPackageId(@PathVariable("idOrBarcode") String idOrBarcode) {
+    String findSignatureByPackageId(@PathVariable("idOrBarcode") String idOrBarcode) {
         //TODO: IMPORTANT - Protect the signature API and grant access to administrators only before using in production!!!
-        return packageService.findSignatureByPackageId(idOrBarcode);
+        return packageService.findSignatureByPackageId(idOrBarcode).getData();
     }
 
     @PostMapping("")

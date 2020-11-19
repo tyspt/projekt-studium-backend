@@ -13,14 +13,14 @@ public class Signature {
     @JsonIgnore
     private Package relatedPackage;
     @Lob
-    private String dataBlob;
+    private String data;
 
     public Signature() {
     }
 
-    public Signature(Package relatedPackage, String dataBlob) {
+    public Signature(Package relatedPackage, String data) {
         this.relatedPackage = relatedPackage;
-        this.dataBlob = dataBlob;
+        this.data = data;
     }
 
     public Long getId() {
@@ -39,12 +39,12 @@ public class Signature {
         this.relatedPackage = relatedPackage;
     }
 
-    public String getDataBlob() {
-        return dataBlob;
+    public String getData() {
+        return data;
     }
 
-    public void setDataBlob(String dataBlob) {
-        this.dataBlob = dataBlob;
+    public void setData(String data) {
+        this.data = data;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Signature {
         return "Signature{" +
                 "id=" + id +
                 ", relatedPackage=" + relatedPackage +
-                ", dataBlob='" + dataBlob + '\'' +
+                ", data='" + data + '\'' +
                 '}';
     }
 }
