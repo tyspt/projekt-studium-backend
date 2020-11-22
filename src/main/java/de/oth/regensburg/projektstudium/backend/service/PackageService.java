@@ -1,6 +1,7 @@
 package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Package;
+import de.oth.regensburg.projektstudium.backend.entity.ShipmentCourse;
 import de.oth.regensburg.projektstudium.backend.entity.Signature;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface PackageService {
 
     Package markNotDeliverable(String idOrBarcode);
 
-    Signature findSignatureByPackageId(String idOrBarcode);
+    List<ShipmentCourse> findShipmentCoursesByPackageIdOrBarcode(String idOrBarcode);
+
+    Signature findSignatureByPackageIdOrBarcode(String idOrBarcode);
 }

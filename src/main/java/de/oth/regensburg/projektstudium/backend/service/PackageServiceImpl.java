@@ -2,6 +2,7 @@ package de.oth.regensburg.projektstudium.backend.service;
 
 import de.oth.regensburg.projektstudium.backend.entity.Driver;
 import de.oth.regensburg.projektstudium.backend.entity.Package;
+import de.oth.regensburg.projektstudium.backend.entity.ShipmentCourse;
 import de.oth.regensburg.projektstudium.backend.entity.Signature;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageStatus;
 import de.oth.regensburg.projektstudium.backend.entity.enums.PackageType;
@@ -105,7 +106,13 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public Signature findSignatureByPackageId(String idOrBarcode) {
+    public List<ShipmentCourse> findShipmentCoursesByPackageIdOrBarcode(String idOrBarcode) {
+        final Package pkg = this.findOneByIdOrBarcode(idOrBarcode);
+        return pkg.getShipmentCourses();
+    }
+
+    @Override
+    public Signature findSignatureByPackageIdOrBarcode(String idOrBarcode) {
         final Package pkg = this.findOneByIdOrBarcode(idOrBarcode);
         return signatureRepository.findById(pkg.getId())
                 .orElseThrow(() -> new NotFoundException(Signature.class));
