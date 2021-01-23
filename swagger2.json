@@ -1,0 +1,1712 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Api Documentation",
+        "version": "1.0",
+        "title": "Api Documentation",
+        "termsOfService": "urn:tos",
+        "contact": {}
+    },
+    "x-google-backend": {
+        "address": "https://jiaweitang.com/"
+    },
+    "tags": [
+        {
+            "name": "basic-error-controller",
+            "description": "Basic Error Controller"
+        },
+        {
+            "name": "building-controller",
+            "description": "Building Controller"
+        },
+        {
+            "name": "driver-controller",
+            "description": "Driver Controller"
+        },
+        {
+            "name": "employee-controller",
+            "description": "Employee Controller"
+        },
+        {
+            "name": "handover-controller",
+            "description": "Handover Controller"
+        },
+        {
+            "name": "package-controller",
+            "description": "Package Controller"
+        }
+    ],
+    "paths": {
+        "/buildings": {
+            "get": {
+                "tags": [
+                    "building-controller"
+                ],
+                "summary": "findAll",
+                "operationId": "findAllUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Building"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "building-controller"
+                ],
+                "summary": "addBuilding",
+                "operationId": "addBuildingUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "building",
+                        "description": "building",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Building"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Building"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/buildings/{id}": {
+            "get": {
+                "tags": [
+                    "building-controller"
+                ],
+                "summary": "findOneById",
+                "operationId": "findOneByIdUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Building"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "building-controller"
+                ],
+                "summary": "updateBuilding",
+                "operationId": "updateBuildingUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "building",
+                        "description": "building",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Building"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Building"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "building-controller"
+                ],
+                "summary": "deleteBuilding",
+                "operationId": "deleteBuildingUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Building"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/drivers": {
+            "get": {
+                "tags": [
+                    "driver-controller"
+                ],
+                "summary": "findAll",
+                "operationId": "findAllUsingGET_1",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Driver"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "driver-controller"
+                ],
+                "summary": "addDriver",
+                "operationId": "addDriverUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "driver",
+                        "description": "driver",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Driver"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Driver"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/drivers/location": {
+            "put": {
+                "tags": [
+                    "driver-controller"
+                ],
+                "summary": "updateLocation",
+                "operationId": "updateLocationUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "Driver-ID",
+                        "in": "header",
+                        "description": "Driver-ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "location",
+                        "description": "location",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Location"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Driver"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/drivers/{id}": {
+            "get": {
+                "tags": [
+                    "driver-controller"
+                ],
+                "summary": "findOneById",
+                "operationId": "findOneByIdUsingGET_1",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Driver"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "driver-controller"
+                ],
+                "summary": "updateDriver",
+                "operationId": "updateDriverUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "driver",
+                        "description": "driver",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Driver"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Driver"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "driver-controller"
+                ],
+                "summary": "deleteDriver",
+                "operationId": "deleteDriverUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Driver"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/employees": {
+            "get": {
+                "tags": [
+                    "employee-controller"
+                ],
+                "summary": "findAll",
+                "operationId": "findAllUsingGET_2",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Employee"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "employee-controller"
+                ],
+                "summary": "addEmployee",
+                "operationId": "addEmployeeUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "employee",
+                        "description": "employee",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/employees/{id}": {
+            "put": {
+                "tags": [
+                    "employee-controller"
+                ],
+                "summary": "updateEmployee",
+                "operationId": "updateEmployeeUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "employee",
+                        "description": "employee",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "employee-controller"
+                ],
+                "summary": "deleteEmployee",
+                "operationId": "deleteEmployeeUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/error": {
+            "get": {
+                "tags": [
+                    "basic-error-controller"
+                ],
+                "summary": "errorHtml",
+                "operationId": "errorHtmlUsingGET",
+                "produces": [
+                    "text/html"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ModelAndView"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "head": {
+                "tags": [
+                    "basic-error-controller"
+                ],
+                "summary": "errorHtml",
+                "operationId": "errorHtmlUsingHEAD",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ModelAndView"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "basic-error-controller"
+                ],
+                "summary": "errorHtml",
+                "operationId": "errorHtmlUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ModelAndView"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "basic-error-controller"
+                ],
+                "summary": "errorHtml",
+                "operationId": "errorHtmlUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ModelAndView"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "basic-error-controller"
+                ],
+                "summary": "errorHtml",
+                "operationId": "errorHtmlUsingDELETE",
+                "produces": [
+                    "text/html"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ModelAndView"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "options": {
+                "tags": [
+                    "basic-error-controller"
+                ],
+                "summary": "errorHtml",
+                "operationId": "errorHtmlUsingOPTIONS",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ModelAndView"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "basic-error-controller"
+                ],
+                "summary": "errorHtml",
+                "operationId": "errorHtmlUsingPATCH",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ModelAndView"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/handovers": {
+            "get": {
+                "tags": [
+                    "handover-controller"
+                ],
+                "summary": "findAll",
+                "operationId": "findAllUsingGET_3",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Handover"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "handover-controller"
+                ],
+                "summary": "addHandover",
+                "operationId": "addHandoverUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "Driver-ID",
+                        "in": "header",
+                        "description": "Driver-ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "handoverUuidJson",
+                        "description": "handoverUuidJson",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ObjectNode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Handover"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/handovers/{uuid}": {
+            "get": {
+                "tags": [
+                    "handover-controller"
+                ],
+                "summary": "findOneByUuid",
+                "operationId": "findOneByUuidUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Handover"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "handover-controller"
+                ],
+                "summary": "addPackage",
+                "operationId": "addPackageUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "idOrBarcodeJson",
+                        "description": "idOrBarcodeJson",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ObjectNode"
+                        }
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Handover"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/handovers/{uuid}/confirm": {
+            "put": {
+                "tags": [
+                    "handover-controller"
+                ],
+                "summary": "confirm",
+                "operationId": "confirmUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Handover"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/handovers/{uuid}/rollback": {
+            "put": {
+                "tags": [
+                    "handover-controller"
+                ],
+                "summary": "rollback",
+                "operationId": "rollbackUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Handover"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/packages": {
+            "get": {
+                "tags": [
+                    "package-controller"
+                ],
+                "summary": "findAll",
+                "operationId": "findAllUsingGET_4",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Package"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "package-controller"
+                ],
+                "summary": "add",
+                "operationId": "addUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "newPackage",
+                        "description": "newPackage",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Package"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Package"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/packages/{idOrBarcode}": {
+            "get": {
+                "tags": [
+                    "package-controller"
+                ],
+                "summary": "findOneByIdOrBarcode",
+                "operationId": "findOneByIdOrBarcodeUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "idOrBarcode",
+                        "in": "path",
+                        "description": "idOrBarcode",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Package"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "package-controller"
+                ],
+                "summary": "updateStatus",
+                "operationId": "updateStatusUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "Driver-ID",
+                        "in": "header",
+                        "description": "Driver-ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idOrBarcode",
+                        "in": "path",
+                        "description": "idOrBarcode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "statusJson",
+                        "description": "statusJson",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ObjectNode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Package"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/packages/{idOrBarcode}/shipmentCourses": {
+            "get": {
+                "tags": [
+                    "package-controller"
+                ],
+                "summary": "findAllShipmentCoursesByPackageId",
+                "operationId": "findAllShipmentCoursesByPackageIdUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "idOrBarcode",
+                        "in": "path",
+                        "description": "idOrBarcode",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ShipmentCourse"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/packages/{idOrBarcode}/signature": {
+            "get": {
+                "tags": [
+                    "package-controller"
+                ],
+                "summary": "findSignatureByPackageId",
+                "operationId": "findSignatureByPackageIdUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "idOrBarcode",
+                        "in": "path",
+                        "description": "idOrBarcode",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Building": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fullName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "shortName": {
+                    "type": "string"
+                }
+            },
+            "title": "Building"
+        },
+        "Driver": {
+            "type": "object",
+            "properties": {
+                "company": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "location": {
+                    "$ref": "#/definitions/Location"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "telephone": {
+                    "type": "string"
+                }
+            },
+            "title": "Driver"
+        },
+        "Employee": {
+            "type": "object",
+            "properties": {
+                "building": {
+                    "$ref": "#/definitions/Building"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "fullAddress": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "representative": {
+                    "$ref": "#/definitions/Employee"
+                },
+                "telephone": {
+                    "type": "string"
+                }
+            },
+            "title": "Employee"
+        },
+        "Handover": {
+            "type": "object",
+            "properties": {
+                "createdTimestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "driver": {
+                    "$ref": "#/definitions/Driver"
+                },
+                "lastUpdatedTimestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "packages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Package"
+                    }
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "CANCELED",
+                        "COMPLETED",
+                        "ON_GOING"
+                    ]
+                },
+                "uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "title": "Handover"
+        },
+        "Location": {
+            "type": "object",
+            "properties": {
+                "accuracy": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "lastUpdatedTimestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "Location"
+        },
+        "ModelAndView": {
+            "type": "object",
+            "properties": {
+                "empty": {
+                    "type": "boolean"
+                },
+                "model": {
+                    "type": "object"
+                },
+                "modelMap": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object"
+                    }
+                },
+                "reference": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "ACCEPTED",
+                        "ALREADY_REPORTED",
+                        "BAD_GATEWAY",
+                        "BAD_REQUEST",
+                        "BANDWIDTH_LIMIT_EXCEEDED",
+                        "CHECKPOINT",
+                        "CONFLICT",
+                        "CONTINUE",
+                        "CREATED",
+                        "DESTINATION_LOCKED",
+                        "EXPECTATION_FAILED",
+                        "FAILED_DEPENDENCY",
+                        "FORBIDDEN",
+                        "FOUND",
+                        "GATEWAY_TIMEOUT",
+                        "GONE",
+                        "HTTP_VERSION_NOT_SUPPORTED",
+                        "IM_USED",
+                        "INSUFFICIENT_SPACE_ON_RESOURCE",
+                        "INSUFFICIENT_STORAGE",
+                        "INTERNAL_SERVER_ERROR",
+                        "I_AM_A_TEAPOT",
+                        "LENGTH_REQUIRED",
+                        "LOCKED",
+                        "LOOP_DETECTED",
+                        "METHOD_FAILURE",
+                        "METHOD_NOT_ALLOWED",
+                        "MOVED_PERMANENTLY",
+                        "MOVED_TEMPORARILY",
+                        "MULTIPLE_CHOICES",
+                        "MULTI_STATUS",
+                        "NETWORK_AUTHENTICATION_REQUIRED",
+                        "NON_AUTHORITATIVE_INFORMATION",
+                        "NOT_ACCEPTABLE",
+                        "NOT_EXTENDED",
+                        "NOT_FOUND",
+                        "NOT_IMPLEMENTED",
+                        "NOT_MODIFIED",
+                        "NO_CONTENT",
+                        "OK",
+                        "PARTIAL_CONTENT",
+                        "PAYLOAD_TOO_LARGE",
+                        "PAYMENT_REQUIRED",
+                        "PERMANENT_REDIRECT",
+                        "PRECONDITION_FAILED",
+                        "PRECONDITION_REQUIRED",
+                        "PROCESSING",
+                        "PROXY_AUTHENTICATION_REQUIRED",
+                        "REQUESTED_RANGE_NOT_SATISFIABLE",
+                        "REQUEST_ENTITY_TOO_LARGE",
+                        "REQUEST_HEADER_FIELDS_TOO_LARGE",
+                        "REQUEST_TIMEOUT",
+                        "REQUEST_URI_TOO_LONG",
+                        "RESET_CONTENT",
+                        "SEE_OTHER",
+                        "SERVICE_UNAVAILABLE",
+                        "SWITCHING_PROTOCOLS",
+                        "TEMPORARY_REDIRECT",
+                        "TOO_EARLY",
+                        "TOO_MANY_REQUESTS",
+                        "UNAUTHORIZED",
+                        "UNAVAILABLE_FOR_LEGAL_REASONS",
+                        "UNPROCESSABLE_ENTITY",
+                        "UNSUPPORTED_MEDIA_TYPE",
+                        "UPGRADE_REQUIRED",
+                        "URI_TOO_LONG",
+                        "USE_PROXY",
+                        "VARIANT_ALSO_NEGOTIATES"
+                    ]
+                },
+                "view": {
+                    "$ref": "#/definitions/View"
+                },
+                "viewName": {
+                    "type": "string"
+                }
+            },
+            "title": "ModelAndView"
+        },
+        "ObjectNode": {
+            "type": "object",
+            "title": "ObjectNode"
+        },
+        "Package": {
+            "type": "object",
+            "properties": {
+                "barcode": {
+                    "type": "string"
+                },
+                "createdTimestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "driver": {
+                    "$ref": "#/definitions/Driver"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "lastUpdatedTimestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "orderNumber": {
+                    "type": "string"
+                },
+                "recipient": {
+                    "$ref": "#/definitions/Employee"
+                },
+                "sender": {
+                    "$ref": "#/definitions/Employee"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "CREATED",
+                        "DELIVERED",
+                        "IN_HANDOVER",
+                        "IN_TRANSPORT",
+                        "NOT_DELIVERABLE",
+                        "REATTEMPT_DELIVERY",
+                        "RECEIVED_BY_LC"
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "INBOUND",
+                        "OUTBOUND"
+                    ]
+                }
+            },
+            "title": "Package"
+        },
+        "ShipmentCourse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "title": "ShipmentCourse"
+        },
+        "View": {
+            "type": "object",
+            "properties": {
+                "contentType": {
+                    "type": "string"
+                }
+            },
+            "title": "View"
+        }
+    }
+}
